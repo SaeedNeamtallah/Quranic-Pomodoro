@@ -91,6 +91,9 @@ const hizbNumber    = $('hizb-number');
 const body          = document.body;
 const alarmSound    = $('alarm-sound');
 const timerProgress = $('timer-progress');
+const timerSection  = $('timer-section');
+const timerDockToggle = $('timer-dock-toggle');
+const timerDockToggleIcon = $('timer-dock-toggle-icon');
 const CIRCUMFERENCE = 2 * Math.PI * 90; // 565.48
 let alarmPrimed = false;
 
@@ -238,6 +241,20 @@ function applyTheme() {
     document.documentElement.style.setProperty('--quran-font-size', config.fontSize || '2rem');
 }
 
+function setBreakDockExpanded(expanded) {
+    const isExpanded = Boolean(expanded) && !isStudyMode;
+    body.classList.toggle('break-dock-expanded', isExpanded);
+
+    if (!timerDockToggle) return;
+
+    timerDockToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+    timerDockToggle.setAttribute('aria-label', isExpanded ? 'إخفاء أدوات القراءة' : 'إظهار أدوات القراءة');
+    timerDockToggle.title = isExpanded ? 'إخفاء أدوات القراءة' : 'إظهار أدوات القراءة';
+    if (timerDockToggleIcon) {
+        timerDockToggleIcon.textContent = isExpanded ? '×' : '⋯';
+    }
+}
+
 // ===== Timer Functions =====
 function formatTime(s) {
     const m = Math.floor(s / 60);
@@ -292,6 +309,7 @@ function switchMode() {
     }
 
     if (isStudyMode) {
+        setBreakDockExpanded(false);
         stats.rubs += config.rubCount;
         persistStats();
         updateStatsDisplay();
@@ -302,6 +320,7 @@ function switchMode() {
         modeSubtitle.textContent = `${config.studyDuration} دقيقة عمل عميق`;
         quranDisplay.classList.add('hidden');
     } else {
+        setBreakDockExpanded(false);
         stats.pomodoros += 1;
         persistStats();
         updateStatsDisplay();
@@ -580,6 +599,25 @@ statsBtn.addEventListener('click', openStatsModal);
 closeStatsBtn.addEventListener('click', closeStatsModal);
 $('stats-overlay').addEventListener('click', closeStatsModal);
 
+if (timerDockToggle) {
+    timerDockToggle.addEventListener('click', () => {
+        setBreakDockExpanded(!body.classList.contains('break-dock-expanded'));
+    });
+}
+
+document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && body.classList.contains('break-dock-expanded')) {
+        setBreakDockExpanded(false);
+    }
+});
+
+document.addEventListener('click', event => {
+    if (!timerSection || isStudyMode || !body.classList.contains('break-dock-expanded')) return;
+    if (window.innerWidth >= 960) return;
+    if (timerSection.contains(event.target)) return;
+    setBreakDockExpanded(false);
+});
+
 // ===== Quran Navigation (Prev / Next) =====
 async function navigateQuran(direction) {
     // direction: 1 = next, -1 = prev
@@ -636,6 +674,7 @@ skipBtn.addEventListener('click', switchMode);
 // ===== Init =====
 initSettings();
 applyTheme();
+setBreakDockExpanded(false);
 updateStatsDisplay();
 modeSubtitle.textContent = `${config.studyDuration} دقيقة عمل عميق`;
 updateDisplay();
