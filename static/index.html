@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260330-16">
+    <link rel="stylesheet" href="style.css?v=20260330-17">
 </head>
 <body class="mode-study">
 
@@ -99,10 +99,26 @@
                 </div>
             </div>
             <div class="controls" id="timer-controls">
-                <button id="start-btn" class="btn btn-primary" type="button">▶ ابدأ</button>
-                <button id="pause-btn" class="btn btn-primary hidden" type="button">⏸ إيقاف</button>
-                <button id="reset-btn" class="btn btn-ghost" type="button">↻ إعادة</button>
-                <button id="skip-btn" class="btn btn-ghost" type="button">⏭ تخطي</button>
+                <button id="reader-focus-control" class="btn btn-ghost" type="button" title="وضع التركيز" aria-label="وضع التركيز" aria-pressed="false">
+                    <span class="btn-icon">⤢</span>
+                    <span class="btn-label">تركيز</span>
+                </button>
+                <button id="start-btn" class="btn btn-primary" type="button" title="ابدأ المؤقت" aria-label="ابدأ المؤقت">
+                    <span class="btn-icon">▶</span>
+                    <span class="btn-label">ابدأ</span>
+                </button>
+                <button id="pause-btn" class="btn btn-primary hidden" type="button" title="إيقاف مؤقت" aria-label="إيقاف مؤقت">
+                    <span class="btn-icon">⏸</span>
+                    <span class="btn-label">إيقاف</span>
+                </button>
+                <button id="reset-btn" class="btn btn-ghost" type="button" title="إعادة المؤقت" aria-label="إعادة المؤقت">
+                    <span class="btn-icon">↻</span>
+                    <span class="btn-label">إعادة</span>
+                </button>
+                <button id="skip-btn" class="btn btn-ghost" type="button" title="تخطي إلى الوضع التالي" aria-label="تخطي إلى الوضع التالي">
+                    <span class="btn-icon">⏭</span>
+                    <span class="btn-label">تخطي</span>
+                </button>
             </div>
         </div>
 
@@ -114,17 +130,16 @@
                     <div id="verses-container" class="verses-area">
                         <!-- Verses will be inserted here -->
                     </div>
-                </div>
-            </div>
-            <div class="quran-nav">
-                <button id="reader-focus-control" class="btn btn-ghost reader-focus-nav-btn">⤢ تركيز</button>
-                <div class="info-badge">
-                    <span id="hizb-number">--</span>
-                    <small>استخدم السهمين للتنقل السريع</small>
-                </div>
-                <div class="quran-nav-arrows">
-                    <button id="prev-btn" class="btn btn-ghost nav-btn"><span class="nav-arrow">→</span><span>السابق</span></button>
-                    <button id="next-btn" class="btn btn-ghost nav-btn"><span>التالي</span><span class="nav-arrow">←</span></button>
+                    <div class="quran-nav">
+                        <div class="info-badge">
+                            <span id="hizb-number">--</span>
+                            <small>استخدم السهمين للتنقل السريع</small>
+                        </div>
+                        <div class="quran-nav-arrows">
+                            <button id="prev-btn" class="btn btn-ghost nav-btn" type="button" title="السابق" aria-label="السابق"><span class="nav-arrow">→</span><span>السابق</span></button>
+                            <button id="next-btn" class="btn btn-ghost nav-btn" type="button" title="التالي" aria-label="التالي"><span>التالي</span><span class="nav-arrow">←</span></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -232,6 +247,6 @@
     <!-- Audio -->
     <audio id="alarm-sound" src="alarm.m4a" preload="auto"></audio>
 
-    <script src="script.js?v=20260330-9"></script>
+    <script src="script.js?v=20260330-10"></script>
 </body>
 </html>

@@ -411,13 +411,18 @@ function setReaderFocus(enabled) {
     focusButtons.forEach(button => {
         button.setAttribute('aria-pressed', readerFocusEnabled ? 'true' : 'false');
         button.title = readerFocusEnabled ? 'إظهار الأدوات' : 'وضع التركيز';
-        if (button === readerFocusControl) {
-            button.textContent = readerFocusEnabled ? '⤡ إنهاء التركيز' : '⤢ تركيز';
-        }
+        button.setAttribute('aria-label', readerFocusEnabled ? 'إنهاء وضع التركيز' : 'وضع التركيز');
     });
 
     if (readerFocusLabel) {
         readerFocusLabel.textContent = readerFocusEnabled ? 'إظهار الأدوات' : 'تركيز';
+    }
+
+    if (readerFocusControl) {
+        const icon = readerFocusControl.querySelector('.btn-icon');
+        const label = readerFocusControl.querySelector('.btn-label');
+        if (icon) icon.textContent = readerFocusEnabled ? '⤡' : '⤢';
+        if (label) label.textContent = readerFocusEnabled ? 'إنهاء' : 'تركيز';
     }
 }
 
