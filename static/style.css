@@ -199,8 +199,9 @@ body.mode-break.reader-focus .app-container {
 
 /* ===== Top Bar ===== */
 .top-bar {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
     align-items: center;
     gap: 1rem;
     padding: 0.85rem 1.25rem;
@@ -337,7 +338,7 @@ body.mode-break .reader-title-row h2 {
 }
 body.mode-break .reader-mode-row {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     padding-top: 0.2rem;
@@ -663,10 +664,12 @@ body.mode-break #reset-btn {
 body.mode-break .controls .btn {
     min-width: 0;
     min-height: 3.55rem;
-    padding: 0.75rem 0.85rem;
-    font-size: 0.88rem;
+    padding: 0.75rem 0.4rem;
+    font-size: 0.82rem;
     border-radius: 22px;
     box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+    flex-direction: column;
+    gap: 0.25rem;
 }
 .btn {
     font-family: 'Tajawal', sans-serif;
@@ -723,7 +726,7 @@ body.mode-break .btn-primary {
     box-shadow: 0 4px 16px var(--break-accent-glow);
 }
 body.mode-break .controls .btn .btn-label {
-    display: none;
+    /* Labels remain visible now as requested */
 }
 body.mode-break .controls .btn .btn-icon {
     font-size: 1.28rem;
@@ -737,12 +740,12 @@ body.mode-break #reader-focus-control,
 body.mode-break #skip-btn {
     background: rgba(255, 255, 255, 0.92);
     color: var(--text-primary);
-    border: 1px solid rgba(15, 23, 42, 0.16);
+    border: 1px solid #ffffff !important;
 }
 body.theme-dark.mode-break #reader-focus-control,
 body.theme-dark.mode-break #skip-btn {
-    background: rgba(18, 24, 36, 0.92);
-    border-color: rgba(0, 0, 0, 0.48);
+    background: rgba(0, 0, 0, 0.92);
+    border-color: #313041 !important;
 }
 body.mode-break #start-btn,
 body.mode-break #pause-btn {
@@ -754,8 +757,8 @@ body.mode-break #pause-btn {
 }
 body.theme-dark.mode-break #start-btn,
 body.theme-dark.mode-break #pause-btn {
-    background: rgba(18, 24, 36, 0.96);
-    border-color: rgba(0, 0, 0, 0.52);
+    background: rgba(0, 0, 0, 0.96);
+    border-color: #313041 !important;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
 }
 body.mode-break #start-btn .btn-icon,
@@ -1408,7 +1411,7 @@ body.theme-dark .mushaf-page-style .ayah-number {
         font-size: 1.18rem;
     }
     body.mode-break .reader-side-stats {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     body.mode-break .controls {
         grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.12fr) minmax(0, 0.92fr);
@@ -1509,3 +1512,978 @@ body.theme-dark .mushaf-page-style .ayah-number {
         height: 2.75rem;
     }
 }
+
+/* ===== Exit Focus Zone ===== */
+.reader-focus-exit-zone {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 25px;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: flex-start;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+body.mode-break.reader-focus .reader-focus-exit-zone {
+    display: flex;
+}
+body.mode-break.reader-focus .reader-focus-exit-zone:hover {
+    width: 60px;
+}
+.reader-focus-exit-button {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    width: 40px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -4px 0 12px rgba(0,0,0,0.1);
+    color: var(--text-primary);
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.theme-dark .reader-focus-exit-button {
+    background: rgba(18, 24, 36, 0.95);
+    border-color: rgba(65, 199, 187, 0.16);
+    box-shadow: -4px 0 16px rgba(0,0,0,0.5);
+    color: var(--accent);
+}
+body.mode-break.reader-focus .reader-focus-exit-zone:hover .reader-focus-exit-button {
+    transform: translateX(0);
+}
+
+
+body.mode-break .reader-extra-actions {
+    display: flex !important;
+}
+
+
+/* Enhancements for Timer Controls */
+body.mode-break .controls .btn {
+    border-radius: 50px !important;
+    gap: 0.4rem;
+    padding: 1rem 0;
+}
+body.mode-break .controls .btn .btn-icon {
+    background: transparent !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+}
+body.theme-dark.mode-break #start-btn,
+body.theme-dark.mode-break #pause-btn {
+    background: #000 !important;
+    border: 1px solid #1f232d !important;
+    box-shadow: none !important;
+}
+body.theme-dark.mode-break #reader-focus-control,
+body.theme-dark.mode-break #skip-btn {
+    background: #000 !important;
+    border: 1px solid #1f232d !important;
+}
+body.mode-break .controls .btn-label {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+}
+body.mode-break #start-btn .btn-icon,
+body.mode-break #pause-btn .btn-icon,
+body.mode-break #reader-focus-control .btn-icon,
+body.mode-break #skip-btn .btn-icon {
+    color: var(--accent) !important;
+}
+
+
+body.theme-dark.mode-break #start-btn,
+body.theme-dark.mode-break #pause-btn,
+body.theme-dark.mode-break #reader-focus-control,
+body.theme-dark.mode-break #skip-btn {
+    border: 1px solid #313041 !important;
+}
+body.mode-break .controls .btn-icon svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+
+/* Increase Surah Name Font Size */
+body.mode-break .reader-title-row h2 {
+    font-size: 1.85rem !important;
+    text-align: center;
+}
+.reader-title-row h2 {
+    font-size: 1.85rem !important;
+}
+
+
+/* Improvements for Reader Focus Exit Button */
+body.mode-break.reader-focus .reader-focus-exit-zone {
+    width: 60px !important;
+}
+.reader-focus-exit-button {
+    transform: translateX(15px) !important;
+    opacity: 0.4;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+body.mode-break.reader-focus .reader-focus-exit-zone:hover .reader-focus-exit-button {
+    transform: translateX(0) !important;
+    opacity: 1;
+    width: 50px !important;
+}
+
+
+/* Refined Reader Focus Exit Button */
+body.mode-break.reader-focus .reader-focus-exit-zone {
+    width: 60px !important;
+    display: flex !important;
+}
+.reader-focus-exit-button {
+    height: 120px !important;
+    width: 45px !important;
+    transform: translateX(20px) !important;
+    opacity: 0.25 !important;
+    background: #11141c !important;
+    border: 1px solid #313041 !important;
+    border-right: none !important;
+}
+.reader-focus-exit-button svg {
+    width: 32px !important;
+    height: 32px !important;
+    color: var(--accent) !important;
+}
+body.mode-break.reader-focus .reader-focus-exit-zone:hover .reader-focus-exit-button {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+}
+
+
+/* Allow the arrow to toggle focus mode on and off */
+body.mode-break .reader-focus-exit-zone {
+    display: flex !important;
+    width: 60px !important;
+}
+body.mode-break .reader-focus-exit-zone:hover .reader-focus-exit-button {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+}
+body.mode-break .reader-focus-exit-button svg {
+    transition: transform 0.3s ease !important;
+    transform: rotate(0deg); 
+}
+body.mode-break.reader-focus .reader-focus-exit-button svg {
+    transform: rotate(180deg);
+}
+
+
+/* Hide the reader mode pill at the bottom */
+#reader-mode-pill {
+    display: none !important;
+}
+
+
+/* ======= ULTRA MODERN REDESIGN ======= */
+:root {
+    --primary-emerald: #0b8058;
+    --primary-emerald-glow: rgba(11, 128, 88, 0.4);
+    --surface-glass: rgba(255, 255, 255, 0.6);
+    --surface-glass-border: rgba(255, 255, 255, 0.8);
+    --text-glass-dark: #1f2937;
+}
+body.theme-dark {
+    --surface-glass: rgba(15, 23, 42, 0.45);
+    --surface-glass-border: rgba(255, 255, 255, 0.08);
+    --text-glass-dark: #f1f5f9;
+}
+
+body.mode-break {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%) !important;
+}
+body.theme-dark.mode-break {
+    background: linear-gradient(135deg, #020617 0%, #0f172a 100%) !important;
+}
+
+/* Timer Ring Glow & Color */
+body.mode-break .timer-ring-progress {
+    stroke: var(--primary-emerald) !important;
+    filter: drop-shadow(0 0 8px var(--primary-emerald-glow));
+}
+body.mode-break .timer-display {
+    color: var(--primary-emerald) !important;
+    font-size: 4rem !important;
+    font-weight: 800 !important;
+}
+
+/* Surah Title Centered */
+body.mode-break .reader-title-row {
+    justify-content: center !important;
+    text-align: center !important;
+    margin-bottom: 2rem !important;
+}
+body.mode-break .reader-title-row h2 {
+    font-size: 2.2rem !important;
+    color: var(--primary-emerald) !important;
+}
+
+/* Controls Redesign */
+body.mode-break .controls {
+    display: flex !important;
+    gap: 1rem !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 1rem;
+}
+body.mode-break #start-btn,
+body.mode-break #pause-btn {
+    background: var(--primary-emerald) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 50px !important;
+    padding: 0.8rem 2.5rem !important;
+    min-width: 140px;
+    box-shadow: 0 8px 24px var(--primary-emerald-glow) !important;
+    flex-direction: row !important; /* side by side */
+}
+body.mode-break #start-btn .btn-icon,
+body.mode-break #pause-btn .btn-icon {
+    color: #fff !important;
+}
+body.mode-break #start-btn .btn-label,
+body.mode-break #pause-btn .btn-label {
+    font-size: 1.1rem !important;
+}
+
+body.mode-break #reader-focus-control,
+body.mode-break #skip-btn {
+    background: transparent !important;
+    color: var(--primary-emerald) !important;
+    border: 2px solid rgba(11, 128, 88, 0.2) !important;
+    border-radius: 50px !important;
+    padding: 0.8rem 1.5rem !important;
+    flex-direction: row !important;
+}
+body.theme-dark.mode-break #reader-focus-control,
+body.theme-dark.mode-break #skip-btn {
+    color: #fff !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Modern Stats Card */
+.modern-stats-card {
+    display: flex !important;
+    background: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--surface-glass-border);
+    border-radius: 20px;
+    padding: 1rem 1.5rem;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    width: 100%;
+}
+.stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(11, 128, 88, 0.2);
+}
+.reader-side-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+.stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+.stat-value {
+    font-size: 1.1rem;
+    color: var(--text-glass-dark);
+    font-weight: 700;
+}
+
+/* Move settings and stats to top */
+body.mode-break .app-header {
+    background: transparent !important;
+    border-bottom: 1px solid var(--surface-glass-border);
+}
+
+
+/* Font Controls Pill Form */
+body.mode-break .reader-font-controls {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 0 !important;
+}
+body.mode-break .reader-font-title {
+    display: block;
+    text-align: center;
+    margin-bottom: 0.8rem;
+    color: var(--primary-emerald);
+    font-weight: 700;
+}
+body.mode-break .reader-font-buttons {
+    display: inline-flex !important;
+    background: transparent;
+    border: 2px solid rgba(11, 128, 88, 0.2);
+    border-radius: 50px;
+    padding: 0.3rem 0.5rem;
+    align-items: center;
+    box-shadow: none;
+    gap: 0.5rem !important;
+}
+body.theme-dark.mode-break .reader-font-buttons {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+body.mode-break .font-step-btn {
+    background: transparent !important;
+    color: var(--primary-emerald) !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    border-radius: 50% !important;
+    border: none !important;
+    font-size: 1.5rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+body.theme-dark.mode-break .font-step-btn {
+    color: #fff !important;
+}
+body.mode-break .font-step-btn:hover {
+    background: rgba(11, 128, 88, 0.1) !important;
+}
+body.mode-break .font-size-display {
+    min-width: 5rem !important;
+    text-align: center;
+    font-weight: 700 !important;
+    color: var(--text-glass-dark) !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 1rem !important;
+}
+
+/* Adjust stats and fonts layout */
+body.mode-break .reader-extra {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Clean Reset Button and Layout */
+body.mode-break #reset-btn {
+    display: inline-flex !important;
+    background: transparent !important;
+    color: var(--primary-emerald) !important;
+    border: 2px solid rgba(11, 128, 88, 0.2) !important;
+    border-radius: 50px !important;
+    padding: 0.8rem 1.5rem !important;
+    flex-direction: row !important;
+    box-shadow: none !important;
+}
+body.theme-dark.mode-break #reset-btn {
+    color: #fff !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.mode-break .controls {
+    grid-template-columns: auto auto auto !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+}
+
+
+/* Absolute Positioning for Settings inside App Header area */
+body.mode-break .reader-extra-actions {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    z-index: 1000;
+}
+body.mode-break .reader-extra-actions .icon-btn {
+    background: transparent !important;
+    color: var(--primary-emerald) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+body.mode-break .reader-extra-actions .icon-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+
+/* Sleek mode subtitle */
+body.mode-break #mode-subtitle {
+    color: var(--primary-emerald) !important;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    text-align: center;
+}
+/* Revert the controls background for focus/skip to match the exact mockup */
+body.mode-break #reader-focus-control,
+body.mode-break #skip-btn {
+    border-radius: 12px !important; /* The mockup has slightly rectangular pills */
+    padding: 0.6rem 1.5rem !important;
+}
+body.mode-break #reset-btn {
+    border-radius: 12px !important;
+    padding: 0.6rem 1.5rem !important;
+}
+body.mode-break #start-btn,
+body.mode-break #pause-btn {
+    border-radius: 12px !important;
+    padding: 0.6rem 2.5rem !important;
+}
+
+/* Adjust Timer Ring size if needed */
+body.mode-break .timer-ring-container {
+    transform: scale(1.1);
+    margin: 2rem 0;
+}
+
+
+/* Quranic Pomodoro Title */
+body.mode-break .app-title {
+    color: var(--text-glass-dark) !important;
+    font-weight: 800;
+}
+/* Focus Pill to Top Center like the design */
+body.mode-break .header-right {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+body.mode-break .brand {
+    padding-left: 20px;
+}
+
+
+/* Reorder buttons explicitly to match the submitted image exactly */
+body.mode-break #start-btn,
+body.mode-break #pause-btn { 
+    order: 3; 
+}
+body.mode-break #reset-btn { 
+    order: 2; 
+}
+body.mode-break #skip-btn { 
+    order: 1; 
+}
+body.mode-break #reader-focus-control {
+    display: none !important; /* Hide focus button from main row since we use the side-arrow toggle now */
+}
+
+/* Fix flex direction since we use order */
+body.mode-break .controls {
+    flex-direction: row !important;
+}
+
+
+/* Fix order for RTL: Start on right, Reset middle, Skip on left */
+body.mode-break #start-btn,
+body.mode-break #pause-btn { 
+    order: 1 !important; 
+}
+body.mode-break #reset-btn { 
+    order: 2 !important; 
+}
+body.mode-break #skip-btn { 
+    order: 3 !important; 
+}
+
+
+/* Re-enable and position the Focus Mode Pill to top center */
+#reader-mode-pill {
+    display: inline-flex !important;
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(50%); /* For RTL centering */
+    background: transparent !important;
+    color: var(--primary-emerald) !important;
+    font-size: 1rem;
+    font-weight: 600;
+}
+#reader-mode-pill::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-emerald);
+    margin-right: 6px; /* Right margin for RTL */
+}
+
+/* Ensure the app header leaves room */
+body.mode-break .app-header {
+    height: 60px !important;
+}
+
+
+/* Attach the exit zone to the inner Quran square */
+.reader-focus-exit-zone {
+    right: auto !important; /* Remove fixed right placement */
+    left: -20px !important;  /* Moved left relative to the right panel/container */
+    height: 100% !important;
+}
+/* Re-orient based on grid structure */
+body.mode-break .app-layout {
+    position: relative;
+}
+body.mode-break #reader-focus-exit-zone {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: calc(340px - 15px); /* Position it exactly on the edge of the side panel */
+    height: 100px;
+    z-index: 1000;
+}
+
+body.mode-break.reader-focus #reader-focus-exit-zone {
+    right: 0 !important; /* Move back to right edge when in focus mode */
+}
+
+
+/* Hide reset button entirely */
+#reset-btn {
+    display: none !important;
+}
+
+/* Adjust Settings icon placement to bottom */
+body.mode-break .reader-extra-actions {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    justify-content: center !important;
+    margin-top: 1.5rem !important;
+}
+/* Revert the app header removal changes for settings */
+body.mode-break .header-right .reader-extra-actions {
+    display: none !important;
+}
+
+
+/* Append settings explicitly at the bottom of the content flow within the aside panel */
+body.mode-break aside.reader-side-panel {
+    display: flex;
+    flex-direction: column;
+}
+/* Ensure the actions naturally fall to the end with spacing */
+body.mode-break .reader-extra-actions {
+    margin-top: auto !important; /* Push it to the bottom */
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+
+/* Fix Arrow Placement - Move to RIGHT inner edge (verses boundary) */
+body.mode-break #reader-focus-exit-zone {
+    position: fixed !important;
+    left: auto !important;
+    right: 340px !important; /* Place it at the inner edge between the right sidebar and left verses */
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+body.mode-break.reader-focus #reader-focus-exit-zone {
+    left: auto !important;
+    right: 0 !important; /* Move to far right screen edge when sidebar is hidden */
+}
+
+.reader-focus-exit-button {
+    border-radius: 12px 0 0 12px !important;
+    border-right: none !important;
+    border-left: 1px solid #313041 !important;
+}
+
+
+/* Fix precise dimensions for the exit button arrow box */
+.reader-focus-exit-button {
+    height: 80px !important;     /* Revert to standard subtle height */
+    width: 35px !important;      /* Slim width */
+    transform: translateX(0px) !important; /* Start slightly shown to be visible */
+    opacity: 0.8 !important;     /* Make sure it's naturally visible */
+    border-radius: 8px 0 0 8px !important; /* Smoother curve pointing left */
+}
+
+body.mode-break #reader-focus-exit-zone {
+    width: 35px !important;
+}
+
+body.mode-break .reader-focus-exit-zone:hover .reader-focus-exit-button {
+    opacity: 1 !important;
+    width: 45px !important;      /* Expand slightly on hover */
+    background: var(--surface) !important;
+}
+
+body.theme-dark.mode-break .reader-focus-exit-zone:hover .reader-focus-exit-button {
+    background: #11141c !important;
+}
+
+.reader-focus-exit-button svg {
+    margin-right: -4px !important; /* visually center the arrow in the offset box */
+}
+
+
+/* Attach to the bounding box accurately */
+body.mode-break #app-container {
+    position: relative;
+}
+
+body.mode-break #reader-focus-exit-zone {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    
+    /* Place it in the grid column of the reading section */
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    
+    /* Align to the START of the column (which is the Right side in RTL) */
+    justify-self: start !important;
+    
+    /* Clear out hardcoded values */
+    right: auto !important;
+    left: auto !important;
+    z-index: 1000 !important;
+}
+
+/* In Focus mode, the sidebar is hidden and quran-section spans entire grid */
+body.mode-break.reader-focus #reader-focus-exit-zone {
+    grid-column: 1 / -1 !important;
+    justify-self: start !important; /* Still right side of the screen */
+}
+
+/* Reset arrow button margin to look attached */
+.reader-focus-exit-button {
+    margin: 0 !important;
+}
+
+    position: absolute !important; 
+    right: 0 !important; 
+    left: auto !important; 
+    top: 50%% !important; 
+    transform: translateY(-50%%) !important; 
+    height: 100px !important; 
+    width: 35px !important; 
+    z-index: 9999 !important; 
+} 
+
+/* Final absolute docking to container edge */
+#reader-focus-exit-zone {
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    height: 100px !important;
+    width: 35px !important;
+    z-index: 9999 !important;
+}
+.reader-focus-exit-button {
+    margin: 0 !important;
+}
+
+
+/* Hide old meta chips below title */
+body.mode-break .reader-meta-row {
+    display: none !important;
+}
+
+/* Timer Number Smaller and No Ring */
+body.mode-break .timer-ring-bg,
+body.mode-break .timer-ring-progress {
+    display: none !important; /* Hide the circles */
+}
+body.mode-break .timer-display {
+    font-size: 3rem !important; /* Smaller size */
+    color: var(--primary-emerald) !important;
+}
+/* Center the timer without the SVG getting in the way */
+body.mode-break .timer-ring-container {
+    height: auto !important;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+}
+body.mode-break svg.timer-ring {
+    display: none !important;
+}
+
+/* Adjust Settings and Stats Icons position to be perfectly at the bottom below Font Box */
+body.mode-break aside.reader-side-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+body.mode-break .reader-extra-actions {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+    margin-top: auto !important; /* Forces it to the bottom */
+    padding-bottom: 2rem !important;
+}
+/* Hide the ones from the top completely */
+body.mode-break .header-right {
+    display: none !important; 
+}
+
+
+/* Progress Bar for Quran Progress */
+body.mode-break .reader-progress-row {
+    display: flex !important;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+body.mode-break .reader-progress-track {
+    width: 60%;
+    height: 6px;
+    background: rgba(11, 128, 88, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+}
+body.mode-break #reader-progress-fill {
+    height: 100%;
+    background: var(--primary-emerald);
+    border-radius: 10px;
+    display: block;
+    width: 25%; /* Default fallback width */
+    transition: width 0.3s ease;
+}
+body.mode-break #reader-progress-text {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* Ensure no text remains below surah title */
+body.mode-break .reader-title-row {
+    margin-bottom: 0.5rem !important; /* reduce margin since progress bar is below it */
+}
+
+
+/* Clean layout for Start and Skip side by side */
+body.mode-break .controls {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    margin-top: 1rem;
+}
+body.mode-break #start-btn,
+body.mode-break #pause-btn {
+    border-radius: 12px !important;
+    width: 60%;
+    order: 1 !important;
+}
+body.mode-break #skip-btn {
+    border-radius: 12px !important;
+    width: 35%;
+    order: 2 !important;
+}
+
+
+/* Hide unnecessary sub-labels below title and under timer */
+body.mode-break #mode-indicator,
+body.mode-break #mode-subtitle {
+    display: none !important;
+}
+/* Ensure no reader mode pill shows below the title */
+#reader-mode-pill {
+    display: none !important;
+}
+
+
+/* Ensure the sidebar flex layout makes the gear and stats sit below the font buttons */
+body.mode-break aside.reader-side-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+/* Re-check margin so they sit right under the font controls rather than pinned far away, unless user wants them just 'below font size' */
+body.mode-break .reader-extra-actions {
+    margin-top: 2rem !important; 
+    margin-bottom: 2rem !important;
+}
+
+
+/* Use Flex Order to put extra actions below font controls without changing HTML */
+body.mode-break aside.reader-side-panel {
+    display: flex;
+    flex-direction: column;
+}
+body.mode-break .reader-header-shell { order: 1; }
+body.mode-break .timer-summary { order: 2; }
+body.mode-break .controls { order: 3; }
+body.mode-break .reader-side-stats { order: 4; }
+body.mode-break .reader-font-controls { order: 5; }
+body.mode-break .reader-extra-actions { order: 6; }
+
+
+/* Set flex order on reader-mode-row to push the icons to the very bottom */
+body.mode-break .reader-mode-row {
+    order: 10 !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: auto !important; /* Push everything above it up, so this sticks to bottom */
+    padding-bottom: 2rem !important;
+}
+
+/* Update the inner action display */
+body.mode-break .reader-extra-actions {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+    margin-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+
+/* Hide reset button in ALL modes, including study/ayahs mode */
+#reset-btn {
+    display: none !important;
+}
+
+
+/* Completely hide rest button */
+html body #reset-btn {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+
+/* Hide Hizb in study mode (chips and stats card) */
+body.mode-study #reader-hizb-chip {
+    display: none !important;
+}
+body.mode-study .reader-side-stats .reader-side-item:first-child,
+body.mode-study .reader-side-stats .stat-divider {
+    display: none !important;
+}
+
+
+
+/* General fix for controls layout globally to match the standard layout and side-by-side spec cleanly */
+.controls {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+}
+
+#start-btn, #pause-btn { 
+    order: 1 !important; 
+    border-radius: 12px !important;
+    flex: 2 !important;
+    min-width: 0 !important;
+}
+
+#skip-btn { 
+    order: 2 !important; 
+    border-radius: 12px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+/* Ensure padding is uniform */
+.controls .btn {
+    padding: 0.8rem 0.5rem !important;
+}
+
+
+/* === CLEAN CONTROLS LAYOUT EXPERT FIX === */
+
+/* Base container */
+.controls {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.85rem !important;
+    width: 100% !important;
+    padding: 0 1rem !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Primary actions: Start/Pause */
+#start-btn, #pause-btn {
+    width: 100% !important;
+    min-height: 3.6rem !important;
+    border-radius: 16px !important;
+    font-size: 1.15rem !important;
+    order: 1 !important;
+}
+
+/* Secondary actions: Skip/Reset */
+#skip-btn, #reset-btn, #reader-focus-control {
+    width: 100% !important;
+    min-height: 3.2rem !important;
+    border-radius: 14px !important;
+    font-size: 1rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: row-reverse !important;
+    order: 2 !important;
+}
+
+#skip-btn .btn-icon, #reset-btn .btn-icon {
+    margin-right: 0 !important;
+    margin-left: 0.5rem !important; /* Icon spacing for RTL */
+}
+
+/* Fix mode-break where they might want a row layout... Actually side-by-side might be too tight. If they do want it row: */
+body.mode-break .controls {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+}
+body.mode-break #start-btn, body.mode-break #pause-btn {
+    flex: 2 !important;
+    width: auto !important;
+}
+body.mode-break #skip-btn, body.mode-break #reader-focus-control {
+    flex: 1 !important;
+    width: auto !important;
+    padding: 0 !important;
+}
+
+/* Totally hide empty modern-stats-card to remove the weird empty capsule artifact */
+.modern-stats-card:empty {
+    display: none !important;
+}
+body.mode-study .modern-stats-card {
+    display: none !important;
+}
+
+/* Globally force hide reset if requested */
+html body #reset-btn {
+    display: none !important;
+}
+

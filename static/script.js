@@ -120,6 +120,7 @@ const readerLastPosition = $('reader-last-position');
 const readerFocusBtn = $('reader-focus-btn');
 const readerFocusLabel = $('reader-focus-label');
 const readerFocusControl = $('reader-focus-control');
+const readerFocusExitZone = $('reader-focus-exit-zone');
 const fontIncreaseBtn = $('font-increase-btn');
 const fontDecreaseBtn = $('font-decrease-btn');
 const fontSizeDisplay = $('font-size-display');
@@ -522,7 +523,6 @@ function setStudyChrome() {
         sidebarStatus: 'جلسة التركيز',
         lastPosition: 'يبدأ الورد بعد انتهاء المؤقت',
         sessionGoal: `${config.studyDuration} دقيقة عمل عميق`,
-        contextLabel: 'بومودورو قرآني هادئ'
     });
 }
 
@@ -964,7 +964,7 @@ statsBtn.addEventListener('click', openStatsModal);
 closeStatsBtn.addEventListener('click', closeStatsModal);
 $('stats-overlay').addEventListener('click', closeStatsModal);
 
-const focusToggleButtons = [readerFocusBtn, readerFocusControl].filter(Boolean);
+const focusToggleButtons = [readerFocusBtn, readerFocusControl, readerFocusExitZone].filter(Boolean);
 focusToggleButtons.forEach(button => {
     button.addEventListener('click', () => {
         if (isStudyMode) return;
