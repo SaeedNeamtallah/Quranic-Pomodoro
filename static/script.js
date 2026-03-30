@@ -107,6 +107,7 @@ const readerSessionGoal = $('reader-session-goal');
 const readerLastPosition = $('reader-last-position');
 const readerFocusBtn = $('reader-focus-btn');
 const readerFocusLabel = $('reader-focus-label');
+const timerSummary = document.querySelector('.timer-summary');
 const CIRCUMFERENCE = 2 * Math.PI * 90; // 565.48
 let alarmPrimed = false;
 
@@ -414,6 +415,19 @@ function setReaderFocus(enabled) {
     }
 }
 
+function updateReadingTimerInteraction() {
+    if (!timerSummary) return;
+
+    const canStartFromTimer = !isStudyMode && timerId === null;
+    timerSummary.classList.toggle('timer-start-ready', canStartFromTimer);
+    timerSummary.tabIndex = canStartFromTimer ? 0 : -1;
+    timerSummary.setAttribute('role', canStartFromTimer ? 'button' : 'group');
+    timerSummary.setAttribute(
+        'aria-label',
+        canStartFromTimer ? 'اضغط لبدء أو استكمال جلسة القراءة' : 'مؤقت جلسة القراءة'
+    );
+}
+
 // ===== Timer Functions =====
 function formatTime(s) {
     const m = Math.floor(s / 60);
@@ -713,6 +727,7 @@ function startTimer() {
     if (timerId !== null) return;
     startBtn.classList.add('hidden');
     pauseBtn.classList.remove('hidden');
+    updateReadingTimerInteraction();
     timerId = setInterval(() => {
         timeRemaining--;
         updateDisplay();
@@ -729,12 +744,19 @@ function pauseTimer() {
     timerId = null;
     pauseBtn.classList.add('hidden');
     startBtn.classList.remove('hidden');
+    updateReadingTimerInteraction();
 }
 
 function resetTimer() {
     pauseTimer();
     timeRemaining = isStudyMode ? STUDY_TIME : BREAK_TIME;
     updateDisplay();
+}
+
+async function startReadingFromTimer() {
+    if (isStudyMode || timerId !== null) return;
+    await primeAlarmAudio();
+    startTimer();
 }
 
 // ===== Event Listeners =====
@@ -794,6 +816,18 @@ if (readerFocusBtn) {
     readerFocusBtn.addEventListener('click', () => {
         if (isStudyMode) return;
         setReaderFocus(!readerFocusEnabled);
+    });
+}
+
+if (timerSummary) {
+    timerSummary.addEventListener('click', () => {
+        startReadingFromTimer();
+    });
+
+    timerSummary.addEventListener('keydown', event => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        startReadingFromTimer();
     });
 }
 
@@ -883,3 +917,4 @@ updateStatsDisplay();
 modeSubtitle.textContent = `${config.studyDuration} دقيقة عمل عميق`;
 setStudyChrome();
 updateDisplay();
+updateReadingTimerInteraction();
