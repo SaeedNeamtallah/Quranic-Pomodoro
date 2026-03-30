@@ -246,13 +246,13 @@ body.mode-break .top-bar {
 body.mode-break .reader-header-shell {
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    order: -1;
+    gap: 0.4rem;
     min-width: 0;
-    padding: 0.95rem 0.85rem;
-    border-radius: 24px;
-    border: 1px solid rgba(5, 150, 105, 0.1);
-    background: rgba(255, 255, 255, 0.74);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    padding: 0 0.2rem 0.15rem;
+    border: none;
+    background: transparent;
+    box-shadow: none;
 }
 .reader-title-row {
     display: flex;
@@ -276,7 +276,12 @@ body.mode-break .reader-title-row {
     text-overflow: ellipsis;
 }
 body.mode-break .reader-title-row h2 {
-    display: none;
+    display: block;
+    font-size: 1.42rem;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: initial;
+    line-height: 1.55;
 }
 .reader-mode-pill {
     display: inline-flex;
@@ -313,6 +318,10 @@ body.mode-break .reader-meta-row {
 }
 body.mode-break .reader-meta-chip {
     justify-content: center;
+}
+.reader-header-shell .reader-meta-row,
+.reader-header-shell .reader-progress-row {
+    display: none;
 }
 .reader-progress-row {
     display: flex;
@@ -755,11 +764,7 @@ body.mode-break.reader-focus .quran-section {
     display: none;
 }
 body.mode-break .reader-inline-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    min-height: 2.4rem;
-    padding-inline: 0.3rem;
+    display: none;
 }
 .reader-inline-copy {
     display: flex;
@@ -1201,8 +1206,7 @@ body.mode-break .info-badge small {
         border-radius: 24px;
     }
     body.mode-break .reader-inline-header {
-        min-height: 2rem;
-        padding-inline: 0.15rem;
+        display: none;
     }
     #reader-surah-inline {
         font-size: 1.32rem;
@@ -1236,7 +1240,7 @@ body.mode-break .info-badge small {
         text-align: center;
     }
     body.mode-break .reader-inline-copy {
-        max-width: 100%;
+        display: none;
     }
     #reader-surah-inline {
         font-size: 1.16rem;
