@@ -755,6 +755,21 @@ function resetTimer() {
     updateDisplay();
 }
 
+async function handleSkipClick(event) {
+    event?.preventDefault?.();
+
+    // Make skip deterministic even if another element overlaps the control.
+    if (timerId !== null) {
+        pauseTimer();
+    }
+
+    if (isStudyMode) {
+        await primeAlarmAudio();
+    }
+
+    switchMode();
+}
+
 // ===== Event Listeners =====
 
 // Settings
@@ -892,7 +907,7 @@ startBtn.addEventListener('click', async () => {
 });
 pauseBtn.addEventListener('click', pauseTimer);
 resetBtn.addEventListener('click', resetTimer);
-skipBtn.addEventListener('click', switchMode);
+skipBtn.addEventListener('click', handleSkipClick);
 
 // ===== Init =====
 initSettings();

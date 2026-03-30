@@ -572,6 +572,8 @@ body.mode-break .reader-side-stats {
 .controls {
     display: flex;
     gap: 0.75rem;
+    position: relative;
+    z-index: 2;
 }
 #reader-focus-control {
     display: none;
