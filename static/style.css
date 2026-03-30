@@ -337,9 +337,10 @@ body.mode-break .reader-title-row h2 {
 }
 body.mode-break .reader-mode-row {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    padding-top: 0.1rem;
+    width: 100%;
+    padding-top: 0.2rem;
 }
 .reader-meta-row {
     display: flex;
@@ -602,6 +603,7 @@ body.mode-break .timer-subtitle {
 body.mode-break .reader-side-stats {
     display: grid;
     gap: 0.45rem;
+    width: 100%;
 }
 .reader-side-item {
     display: flex;
@@ -789,7 +791,8 @@ body.mode-break .reader-font-controls {
     flex-direction: column;
     align-items: center;
     gap: 0.42rem;
-    padding-top: 0.1rem;
+    width: 100%;
+    padding-top: 0.18rem;
 }
 body.theme-dark.mode-break .reader-font-title {
     color: #d7e3ff;
@@ -982,25 +985,64 @@ body.mode-break .mushaf-layout {
 }
 
 .ayah-number {
+    --ayah-medallion-size: 2.5rem;
+    --ayah-medallion-core: #171b25;
+    --ayah-medallion-ink: #fff0cb;
+    --ayah-medallion-ring: #d2a75f;
+    --ayah-medallion-halo: rgba(210, 167, 95, 0.18);
+    --ayah-medallion-shadow: rgba(15, 23, 42, 0.12);
+    position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: var(--ayah-medallion-size);
+    height: var(--ayah-medallion-size);
+    margin: 0 0.52rem;
+    border: none;
     border-radius: 50%;
-    border: 1.5px solid var(--break-accent);
-    color: var(--break-accent);
-    font-size: 0.8rem;
-    margin: 0 0.4rem;
+    color: var(--ayah-medallion-ink);
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1;
     font-family: 'Outfit', sans-serif;
-    background: rgba(251, 191, 36, 0.08);
-    vertical-align: middle;
+    font-variant-numeric: tabular-nums;
+    background:
+        radial-gradient(circle at center, var(--ayah-medallion-core) 0 54%, transparent 55%),
+        radial-gradient(circle at center, transparent 61%, var(--ayah-medallion-ring) 61% 64%, transparent 65%),
+        radial-gradient(circle at center, transparent 72%, var(--ayah-medallion-halo) 72% 75%, transparent 76%);
+    box-shadow: 0 6px 16px var(--ayah-medallion-shadow);
+    vertical-align: -0.28em;
+}
+.ayah-number::before,
+.ayah-number::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.ayah-number::before {
+    inset: -0.28rem;
+    background:
+        radial-gradient(circle at 34% 10%, var(--ayah-medallion-ring) 0 0.08rem, transparent 0.1rem),
+        radial-gradient(circle at 50% 4%, var(--ayah-medallion-ring) 0 0.085rem, transparent 0.11rem),
+        radial-gradient(circle at 66% 10%, var(--ayah-medallion-ring) 0 0.08rem, transparent 0.1rem),
+        radial-gradient(circle at 8% 50%, var(--ayah-medallion-ring) 0 0.08rem, transparent 0.1rem),
+        radial-gradient(circle at 92% 50%, var(--ayah-medallion-ring) 0 0.08rem, transparent 0.1rem),
+        radial-gradient(circle at 34% 90%, var(--ayah-medallion-ring) 0 0.08rem, transparent 0.1rem),
+        radial-gradient(circle at 50% 96%, var(--ayah-medallion-ring) 0 0.085rem, transparent 0.11rem),
+        radial-gradient(circle at 66% 90%, var(--ayah-medallion-ring) 0 0.08rem, transparent 0.1rem);
+    opacity: 0.92;
+}
+.ayah-number::after {
+    inset: -0.12rem;
+    border: 1px solid rgba(255, 240, 203, 0.42);
+    opacity: 0.82;
 }
 body.mode-break .ayah-number {
-    width: 30px;
-    height: 30px;
-    margin: 0 0.45rem;
-    background: rgba(16, 185, 129, 0.06);
+    --ayah-medallion-size: 2.34rem;
+    margin: 0 0.5rem;
 }
 
 /* ===== Mushaf Page Mode ===== */
@@ -1031,11 +1073,7 @@ body.theme-dark .mushaf-page-style {
     color: var(--text-primary) !important;
 }
 .mushaf-page-style .ayah-number {
-    border-color: var(--break-accent) !important;
-    color: var(--break-accent) !important;
-    background: rgba(16, 185, 129, 0.06) !important;
-    width: 28px;
-    height: 28px;
+    --ayah-medallion-size: 2.15rem;
     font-size: 0.7rem;
 }
 
@@ -1332,7 +1370,11 @@ body.theme-dark .reader-progress-track {
 body.theme-dark .ayah-number,
 body.theme-dark.mode-break .ayah-number,
 body.theme-dark .mushaf-page-style .ayah-number {
-    background: rgba(122, 162, 255, 0.08) !important;
+    --ayah-medallion-core: #0f1420;
+    --ayah-medallion-ink: #fff3d5;
+    --ayah-medallion-ring: #efc578;
+    --ayah-medallion-halo: rgba(239, 197, 120, 0.2);
+    --ayah-medallion-shadow: rgba(0, 0, 0, 0.26);
 }
 
 @media (max-width: 959px) {
