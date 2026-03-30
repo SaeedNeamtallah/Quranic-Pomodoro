@@ -100,7 +100,10 @@ Deployment workflow:
 2. Commit and push the repo to GitHub
 3. In GitHub, open `Settings -> Pages`
 4. Set `Source` to `GitHub Actions`
-5. Push to `main` or `master`, or run the `Deploy GitHub Pages` workflow manually
+5. Save the Pages settings once before relying on the workflow
+6. Push to `main` or `master`, or run the `Deploy GitHub Pages` workflow manually
+
+If `actions/configure-pages` fails with a `Get Pages site failed` or `Not Found` error, the repository usually has not been enabled for GitHub Pages yet in `Settings -> Pages`.
 
 The workflow file is:
 
