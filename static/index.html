@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260330-17">
+    <link rel="stylesheet" href="style.css?v=20260330-18">
 </head>
 <body class="mode-study">
 
@@ -100,23 +100,50 @@
             </div>
             <div class="controls" id="timer-controls">
                 <button id="reader-focus-control" class="btn btn-ghost" type="button" title="وضع التركيز" aria-label="وضع التركيز" aria-pressed="false">
-                    <span class="btn-icon">⤢</span>
+                    <span class="btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+                            <path d="M16 3h3a2 2 0 0 1 2 2v3"></path>
+                            <path d="M8 21H5a2 2 0 0 1-2-2v-3"></path>
+                            <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+                        </svg>
+                    </span>
                     <span class="btn-label">تركيز</span>
                 </button>
                 <button id="start-btn" class="btn btn-primary" type="button" title="ابدأ المؤقت" aria-label="ابدأ المؤقت">
-                    <span class="btn-icon">▶</span>
+                    <span class="btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" class="icon-fill">
+                            <path d="M8 5.5v13l10-6.5-10-6.5z"></path>
+                        </svg>
+                    </span>
                     <span class="btn-label">ابدأ</span>
                 </button>
                 <button id="pause-btn" class="btn btn-primary hidden" type="button" title="إيقاف مؤقت" aria-label="إيقاف مؤقت">
-                    <span class="btn-icon">⏸</span>
+                    <span class="btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" class="icon-fill">
+                            <rect x="7" y="5" width="3.5" height="14" rx="1.2"></rect>
+                            <rect x="13.5" y="5" width="3.5" height="14" rx="1.2"></rect>
+                        </svg>
+                    </span>
                     <span class="btn-label">إيقاف</span>
                 </button>
                 <button id="reset-btn" class="btn btn-ghost" type="button" title="إعادة المؤقت" aria-label="إعادة المؤقت">
-                    <span class="btn-icon">↻</span>
+                    <span class="btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 5v6h-6"></path>
+                            <path d="M20 11a8 8 0 1 0 2.3 5.7"></path>
+                        </svg>
+                    </span>
                     <span class="btn-label">إعادة</span>
                 </button>
                 <button id="skip-btn" class="btn btn-ghost" type="button" title="تخطي إلى الوضع التالي" aria-label="تخطي إلى الوضع التالي">
-                    <span class="btn-icon">⏭</span>
+                    <span class="btn-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 6.5v11l7-5.5-7-5.5z"></path>
+                            <path d="M12 6.5v11l7-5.5-7-5.5z"></path>
+                            <path d="M19 6v12"></path>
+                        </svg>
+                    </span>
                     <span class="btn-label">تخطي</span>
                 </button>
             </div>
@@ -127,17 +154,31 @@
             <div class="reader-stage">
                 <div class="loader hidden" id="quran-loader"></div>
                 <div class="reader-page-frame">
+                    <div class="reader-inline-header" aria-live="polite">
+                        <div class="reader-inline-copy">
+                            <span id="hizb-number" class="reader-inline-meta">--</span>
+                            <strong id="reader-surah-inline">جاهز للجلسة</strong>
+                        </div>
+                    </div>
                     <div id="verses-container" class="verses-area">
                         <!-- Verses will be inserted here -->
                     </div>
                     <div class="quran-nav">
-                        <div class="info-badge">
-                            <span id="hizb-number">--</span>
-                            <small>استخدم السهمين للتنقل السريع</small>
-                        </div>
                         <div class="quran-nav-arrows">
-                            <button id="prev-btn" class="btn btn-ghost nav-btn" type="button" title="السابق" aria-label="السابق"><span class="nav-arrow">→</span><span>السابق</span></button>
-                            <button id="next-btn" class="btn btn-ghost nav-btn" type="button" title="التالي" aria-label="التالي"><span>التالي</span><span class="nav-arrow">←</span></button>
+                            <button id="prev-btn" class="btn btn-ghost nav-btn" type="button" title="السابق" aria-label="السابق">
+                                <span class="nav-arrow" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="m15 6-6 6 6 6"></path>
+                                    </svg>
+                                </span>
+                            </button>
+                            <button id="next-btn" class="btn btn-ghost nav-btn" type="button" title="التالي" aria-label="التالي">
+                                <span class="nav-arrow" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="m9 6 6 6-6 6"></path>
+                                    </svg>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -247,6 +288,6 @@
     <!-- Audio -->
     <audio id="alarm-sound" src="alarm.m4a" preload="auto"></audio>
 
-    <script src="script.js?v=20260330-10"></script>
+    <script src="script.js?v=20260330-11"></script>
 </body>
 </html>

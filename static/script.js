@@ -96,6 +96,7 @@ const timerSection  = $('timer-section');
 const readerContextLabel = $('reader-context-label');
 const readerModePill = $('reader-mode-pill');
 const readerSurahName = $('reader-surah-name');
+const readerSurahInline = $('reader-surah-inline');
 const readerPageChip = $('reader-page-chip');
 const readerJuzChip = $('reader-juz-chip');
 const readerHizbChip = $('reader-hizb-chip');
@@ -111,6 +112,24 @@ const readerFocusControl = $('reader-focus-control');
 const timerSummary = document.querySelector('.timer-summary');
 const CIRCUMFERENCE = 2 * Math.PI * 90; // 565.48
 let alarmPrimed = false;
+const FOCUS_ENTER_ICON = `
+    <svg viewBox="0 0 24 24">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+        <path d="M16 3h3a2 2 0 0 1 2 2v3"></path>
+        <path d="M8 21H5a2 2 0 0 1-2-2v-3"></path>
+        <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+    </svg>
+`;
+const FOCUS_EXIT_ICON = `
+    <svg viewBox="0 0 24 24">
+        <path d="M9 3H5a2 2 0 0 0-2 2v4"></path>
+        <path d="M15 3h4a2 2 0 0 1 2 2v4"></path>
+        <path d="M9 21H5a2 2 0 0 1-2-2v-4"></path>
+        <path d="M15 21h4a2 2 0 0 0 2-2v-4"></path>
+        <path d="m9 9 6 6"></path>
+        <path d="m15 9-6 6"></path>
+    </svg>
+`;
 
 // Request notification permission on load
 if ('Notification' in window && Notification.permission === 'default') {
@@ -374,6 +393,7 @@ function updateReaderChrome(meta) {
     }
     if (readerModePill) readerModePill.textContent = details.modeLabel;
     if (readerSurahName) readerSurahName.textContent = details.surahTitle;
+    if (readerSurahInline) readerSurahInline.textContent = details.surahTitle;
     if (readerPageChip) readerPageChip.textContent = details.pageLabel;
     if (readerJuzChip) readerJuzChip.textContent = details.juzLabel;
     if (readerHizbChip) readerHizbChip.textContent = details.hizbLabel;
@@ -421,7 +441,7 @@ function setReaderFocus(enabled) {
     if (readerFocusControl) {
         const icon = readerFocusControl.querySelector('.btn-icon');
         const label = readerFocusControl.querySelector('.btn-label');
-        if (icon) icon.textContent = readerFocusEnabled ? '⤡' : '⤢';
+        if (icon) icon.innerHTML = readerFocusEnabled ? FOCUS_EXIT_ICON : FOCUS_ENTER_ICON;
         if (label) label.textContent = readerFocusEnabled ? 'إنهاء' : 'تركيز';
     }
 }

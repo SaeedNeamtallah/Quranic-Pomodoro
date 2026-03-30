@@ -262,9 +262,9 @@ body.mode-break .reader-header-shell {
 }
 body.mode-break .reader-title-row {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-end;
     gap: 0.45rem;
-    text-align: center;
+    text-align: right;
 }
 .reader-title-row h2 {
     font-family: 'Amiri', serif;
@@ -276,11 +276,7 @@ body.mode-break .reader-title-row {
     text-overflow: ellipsis;
 }
 body.mode-break .reader-title-row h2 {
-    font-size: 1.24rem;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: initial;
-    line-height: 1.55;
+    display: none;
 }
 .reader-mode-pill {
     display: inline-flex;
@@ -625,6 +621,21 @@ body.mode-break .controls .btn {
     font-size: 1.05rem;
     line-height: 1;
 }
+.btn-icon svg,
+.nav-arrow svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    display: block;
+    stroke: currentColor;
+    stroke-width: 2.15;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+.btn-icon svg.icon-fill {
+    fill: currentColor;
+    stroke: none;
+}
 .btn-label {
     line-height: 1;
 }
@@ -647,6 +658,11 @@ body.mode-break .controls .btn .btn-label {
 }
 body.mode-break .controls .btn .btn-icon {
     font-size: 1.28rem;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 body.mode-break #reader-focus-control,
 body.mode-break #skip-btn {
@@ -665,6 +681,13 @@ body.mode-break #pause-btn {
 body.mode-break #start-btn .btn-icon,
 body.mode-break #pause-btn .btn-icon {
     font-size: 1.55rem;
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+body.mode-break #reader-focus-control .btn-icon,
+body.mode-break #skip-btn .btn-icon {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent);
 }
 body.mode-break .controls .btn:hover {
     transform: translateY(-1px) scale(1.01);
@@ -717,6 +740,7 @@ body.mode-break.reader-focus .quran-section {
     min-height: 0;
     display: flex;
     flex-direction: column;
+    position: relative;
     gap: 0.75rem;
     background: linear-gradient(180deg, rgba(247, 248, 250, 0.97) 0%, rgba(235, 238, 242, 0.97) 100%);
     border: 1px solid var(--surface-border);
@@ -724,7 +748,38 @@ body.mode-break.reader-focus .quran-section {
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
         0 18px 48px rgba(15, 23, 42, 0.08);
-    padding: 0.85rem;
+    padding: 0.95rem 1rem 1rem;
+}
+
+.reader-inline-header {
+    display: none;
+}
+body.mode-break .reader-inline-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    min-height: 2.4rem;
+    padding-inline: 0.3rem;
+}
+.reader-inline-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.12rem;
+    max-width: min(64%, 440px);
+    text-align: right;
+}
+.reader-inline-meta {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+#reader-surah-inline {
+    font-family: 'Amiri', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-primary);
 }
 
 .verses-area {
@@ -737,7 +792,7 @@ body.mode-break.reader-focus .quran-section {
     border-radius: 12px;
 }
 body.mode-break .verses-area {
-    padding: 2rem 2.35rem;
+    padding: 0.9rem 2.35rem 5.7rem;
     background: transparent !important;
     border-radius: 22px;
 }
@@ -828,9 +883,19 @@ body.mode-break .ayah-number {
     flex-shrink: 0;
 }
 body.mode-break .quran-nav {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    width: auto;
     margin-top: 0;
-    padding: 0.85rem 0.1rem 0.1rem;
-    direction: rtl;
+    padding: 0;
+    border-top: none;
+    direction: ltr;
+    z-index: 3;
+}
+body.mode-break .quran-nav-arrows {
+    display: flex;
+    width: auto;
 }
 .quran-nav-arrows {
     display: grid;
@@ -853,22 +918,27 @@ body.mode-break .quran-nav {
 }
 body.mode-break .nav-btn {
     position: static;
-    width: auto;
-    height: auto;
+    width: 3.35rem;
+    height: 3.35rem;
     min-width: 0;
-    padding: 0.82rem 1rem;
-    border-radius: 18px;
+    padding: 0;
+    border-radius: 999px;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 10px 24px rgba(16, 24, 40, 0.06);
     border: 1px solid rgba(5, 150, 105, 0.1);
 }
-body.mode-break .nav-btn span:not(.nav-arrow) {
-    display: inline;
-    font-size: 0.9rem;
-    font-weight: 700;
-}
 body.mode-break .nav-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
     font-size: 1.15rem;
+    color: var(--accent);
+}
+body.mode-break .nav-arrow svg {
+    width: 1.28rem;
+    height: 1.28rem;
 }
 .nav-arrow {
     font-family: 'Outfit', sans-serif;
@@ -1130,11 +1200,22 @@ body.mode-break .info-badge small {
         padding: 0.65rem;
         border-radius: 24px;
     }
+    body.mode-break .reader-inline-header {
+        min-height: 2rem;
+        padding-inline: 0.15rem;
+    }
+    #reader-surah-inline {
+        font-size: 1.32rem;
+    }
     body.mode-break .verses-area {
-        padding: 1.2rem 1.15rem;
+        padding: 0.75rem 1.15rem 5rem;
     }
     body.mode-break .nav-btn {
-        padding: 0.72rem 0.85rem;
+        width: 3rem;
+        height: 3rem;
+    }
+    body.mode-break .quran-nav-arrows {
+        width: auto;
     }
     body.mode-break.reader-focus .timer-section {
         display: none;
@@ -1154,6 +1235,12 @@ body.mode-break .info-badge small {
         align-items: center;
         text-align: center;
     }
+    body.mode-break .reader-inline-copy {
+        max-width: 100%;
+    }
+    #reader-surah-inline {
+        font-size: 1.16rem;
+    }
     body.mode-break .reader-side-stats {
         grid-template-columns: 1fr;
     }
@@ -1164,9 +1251,15 @@ body.mode-break .info-badge small {
         padding-inline: 0.8rem;
     }
     body.mode-break .quran-nav-arrows {
+        width: auto;
         gap: 0.55rem;
     }
-    body.mode-break .nav-btn span:not(.nav-arrow) {
-        font-size: 0.82rem;
+    body.mode-break .quran-nav {
+        left: 0.85rem;
+        bottom: 0.85rem;
+    }
+    body.mode-break .nav-btn {
+        width: 2.75rem;
+        height: 2.75rem;
     }
 }
