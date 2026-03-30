@@ -154,6 +154,14 @@ body.mode-break .app-container {
     max-height: 96vh;
     height: 96vh;
     margin-left: 240px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+body.mode-break .top-bar,
+body.mode-break .quran-section {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 /* ===== Top Bar ===== */
