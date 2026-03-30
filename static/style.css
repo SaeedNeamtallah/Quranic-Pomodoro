@@ -986,11 +986,11 @@ body.mode-break .mushaf-layout {
 
 .ayah-number {
     --ayah-medallion-size: 2.5rem;
-    --ayah-medallion-core: #171b25;
-    --ayah-medallion-ink: #fff0cb;
-    --ayah-medallion-ring: #d2a75f;
-    --ayah-medallion-halo: rgba(210, 167, 95, 0.18);
-    --ayah-medallion-shadow: rgba(15, 23, 42, 0.12);
+    --ayah-medallion-core: #3f4754;
+    --ayah-medallion-ink: #f5f7fb;
+    --ayah-medallion-ring: #6d7686;
+    --ayah-medallion-halo: rgba(109, 118, 134, 0.14);
+    --ayah-medallion-shadow: rgba(15, 23, 42, 0.1);
     position: relative;
     isolation: isolate;
     display: inline-flex;
@@ -1037,7 +1037,7 @@ body.mode-break .mushaf-layout {
 }
 .ayah-number::after {
     inset: -0.12rem;
-    border: 1px solid rgba(255, 240, 203, 0.42);
+    border: 1px solid rgba(109, 118, 134, 0.28);
     opacity: 0.82;
 }
 body.mode-break .ayah-number {
@@ -1370,11 +1370,11 @@ body.theme-dark .reader-progress-track {
 body.theme-dark .ayah-number,
 body.theme-dark.mode-break .ayah-number,
 body.theme-dark .mushaf-page-style .ayah-number {
-    --ayah-medallion-core: #0f1420;
-    --ayah-medallion-ink: #fff3d5;
-    --ayah-medallion-ring: #efc578;
-    --ayah-medallion-halo: rgba(239, 197, 120, 0.2);
-    --ayah-medallion-shadow: rgba(0, 0, 0, 0.26);
+    --ayah-medallion-core: #2a3241;
+    --ayah-medallion-ink: #eef2f8;
+    --ayah-medallion-ring: #8691a4;
+    --ayah-medallion-halo: rgba(134, 145, 164, 0.16);
+    --ayah-medallion-shadow: rgba(0, 0, 0, 0.24);
 }
 
 @media (max-width: 959px) {
