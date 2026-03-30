@@ -108,7 +108,6 @@ const readerLastPosition = $('reader-last-position');
 const readerFocusBtn = $('reader-focus-btn');
 const readerFocusLabel = $('reader-focus-label');
 const readerFocusControl = $('reader-focus-control');
-const readerFocusFab = $('reader-focus-fab');
 const timerSummary = document.querySelector('.timer-summary');
 const CIRCUMFERENCE = 2 * Math.PI * 90; // 565.48
 let alarmPrimed = false;
@@ -408,7 +407,7 @@ function setReaderFocus(enabled) {
     readerFocusEnabled = Boolean(enabled) && !isStudyMode;
     body.classList.toggle('reader-focus', readerFocusEnabled);
 
-    const focusButtons = [readerFocusBtn, readerFocusControl, readerFocusFab].filter(Boolean);
+    const focusButtons = [readerFocusBtn, readerFocusControl].filter(Boolean);
     focusButtons.forEach(button => {
         button.setAttribute('aria-pressed', readerFocusEnabled ? 'true' : 'false');
         button.title = readerFocusEnabled ? 'إظهار الأدوات' : 'وضع التركيز';
@@ -809,7 +808,7 @@ statsBtn.addEventListener('click', openStatsModal);
 closeStatsBtn.addEventListener('click', closeStatsModal);
 $('stats-overlay').addEventListener('click', closeStatsModal);
 
-const focusToggleButtons = [readerFocusBtn, readerFocusControl, readerFocusFab].filter(Boolean);
+const focusToggleButtons = [readerFocusBtn, readerFocusControl].filter(Boolean);
 focusToggleButtons.forEach(button => {
     button.addEventListener('click', () => {
         if (isStudyMode) return;
