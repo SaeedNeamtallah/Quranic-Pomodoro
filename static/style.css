@@ -119,7 +119,10 @@ body {
     overflow: hidden;
 }
 body.mode-study { background: var(--bg-study); }
-body.mode-break { background: var(--bg-break); }
+body.mode-break {
+    background: var(--bg-break);
+    padding: 1rem;
+}
 
 .floating-logo {
     position: fixed;
@@ -147,35 +150,10 @@ body.mode-break { background: var(--bg-break); }
 }
 body.mode-break .app-container {
     max-width: 1400px;
-    width: 98vw;
+    width: min(1400px, calc(100vw - 240px - 2rem));
     max-height: 96vh;
     height: 96vh;
-}
-
-@media (min-width: 960px) {
-    body.mode-break .app-container {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 190px;
-        grid-template-rows: auto minmax(0, 1fr);
-    }
-    body.mode-break .top-bar {
-        grid-column: 1 / -1;
-        grid-row: 1;
-    }
-    body.mode-break .timer-section {
-        grid-column: 2;
-        grid-row: 2;
-        justify-content: flex-start;
-        padding: 1rem 0.85rem;
-        border-inline-start: 1px solid var(--surface-border);
-        gap: 0.75rem;
-    }
-    body.mode-break .quran-section {
-        grid-column: 1;
-        grid-row: 2;
-        border-top: none;
-        min-height: 0;
-    }
+    margin-left: 240px;
 }
 
 /* ===== Top Bar ===== */
@@ -248,8 +226,21 @@ body.mode-break .app-container {
     transition: padding var(--transition);
 }
 body.mode-break .timer-section {
-    padding: 0.9rem 1.25rem;
+    position: fixed;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 196px;
+    padding: 1rem 0.9rem;
+    justify-content: flex-start;
     gap: 0.35rem;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid var(--surface-border);
+    border-radius: 22px;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.14);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    z-index: 40;
 }
 
 .mode-indicator {
@@ -282,8 +273,8 @@ body.mode-break .mode-dot { background: var(--break-accent); }
     transition: all var(--transition);
 }
 body.mode-break .timer-ring-container {
-    width: 106px;
-    height: 106px;
+    width: 92px;
+    height: 92px;
 }
 
 .timer-ring {
@@ -324,7 +315,7 @@ body.mode-break .timer-ring-progress {
     transition: font-size var(--transition);
 }
 body.mode-break .timer-display {
-    font-size: 1.55rem;
+    font-size: 1.35rem;
 }
 
 .timer-subtitle {
@@ -404,6 +395,7 @@ body.mode-break .btn-primary {
 }
 body.mode-break .quran-section {
     padding: 0.9rem 1.1rem 0.65rem;
+    border-top: none;
 }
 
 .verses-area {
@@ -661,32 +653,55 @@ body.mode-break .quran-section {
 
 @media (max-width: 959px) {
     body.mode-break .app-container {
-        display: flex;
+        width: 100%;
+        max-width: none;
+        margin-left: 0;
+        height: calc(100vh - 126px);
+        max-height: calc(100vh - 126px);
     }
     body.mode-break .timer-section {
-        padding: 0.7rem 0.9rem;
-        gap: 0.3rem;
+        top: auto;
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
+        transform: none;
+        width: auto;
+        padding: 0.7rem 0.75rem;
+        display: grid;
+        grid-template-columns: 78px minmax(0, 1fr);
+        grid-template-areas:
+            "indicator indicator"
+            "ring controls";
+        align-items: center;
+        gap: 0.45rem 0.7rem;
     }
     body.mode-break .mode-indicator {
+        grid-area: indicator;
+        justify-content: center;
         font-size: 0.75rem;
         letter-spacing: 0.04em;
     }
     body.mode-break .timer-ring-container {
-        width: 82px;
-        height: 82px;
-        margin: 0.2rem 0;
+        grid-area: ring;
+        width: 78px;
+        height: 78px;
+        margin: 0;
     }
     body.mode-break .timer-display {
-        font-size: 1.2rem;
+        font-size: 1.08rem;
+    }
+    body.mode-break .controls {
+        grid-area: controls;
+        justify-content: stretch;
     }
     body.mode-break .controls .btn {
-        flex: 1 1 auto;
-        padding: 0.42rem 0.75rem;
+        flex: 1 1 calc(50% - 0.25rem);
+        padding: 0.42rem 0.55rem;
         font-size: 0.76rem;
     }
     body.mode-break .quran-section {
         min-height: 0;
-        padding: 0.75rem 0.8rem 0.55rem;
+        padding: 0.75rem 0.8rem 7.2rem;
     }
     body.mode-break .verses-area {
         padding: 1rem;
