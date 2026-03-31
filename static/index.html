@@ -10,8 +10,8 @@
     <meta name="description" content="Quranic Pomodoro - تطبيق بومودورو مدمج مع قراءة القرآن الكريم">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260330-34">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Amiri+Quran&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=20260331-51">
 </head>
 <body class="mode-study">
 
@@ -19,13 +19,13 @@
     <div class="app-container" id="app-container">
 
         <!-- Exit Focus Zone -->
-        <div class="reader-focus-exit-zone" id="reader-focus-exit-zone" title="إظهار القائمة">
-            <div class="reader-focus-exit-button">
+        <button class="reader-focus-exit-zone" id="reader-focus-exit-zone" type="button" title="وضع التركيز" aria-label="وضع التركيز" aria-pressed="false">
+            <span class="reader-focus-exit-button" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 18l-6-6 6-6"></path>
                 </svg>
-            </div>
-        </div>
+            </span>
+        </button>
 
         <!-- Top Bar -->
         <div class="top-bar">
@@ -86,7 +86,8 @@
                 </div>
                 <p class="timer-subtitle" id="mode-subtitle">٣٠ دقيقة عمل عميق</p>
             </div>
-            <div class="controls" id="timer-controls">
+            <div class="sidebar-bottom-group">
+              <div class="controls" id="timer-controls">
                 <button id="reader-focus-control" class="btn btn-ghost" type="button" title="وضع التركيز" aria-label="وضع التركيز" aria-pressed="false">
                     <span class="btn-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24">
@@ -147,9 +148,19 @@
                 </div>
             </div>
             <div class="reader-side-stats modern-stats-card">
-
-
-</div>
+                <div class="reader-side-item">
+                    <span id="reader-side-label-1">الحزب</span>
+                    <strong id="reader-side-mode">أرباع متتالية</strong>
+                </div>
+                <div class="reader-side-item">
+                    <span id="reader-side-label-2">ربع الحزب</span>
+                    <strong id="reader-session-goal">جلسة هادئة</strong>
+                </div>
+                <div class="reader-side-item">
+                    <span id="reader-side-label-3">الربع من 240</span>
+                    <strong id="reader-last-position">الصفحة 1</strong>
+                </div>
+            </div>
             <div class="reader-font-controls" id="reader-font-controls">
                 <span class="reader-font-title">حجم الخط</span>
                 <div class="reader-font-buttons">
@@ -159,8 +170,9 @@
                 </div>
             </div>
         </div>
+          </div>
 
-        <!-- Quran Display Section -->
+          <!-- Quran Display Section -->
         <div id="quran-display" class="quran-section hidden">
             <div class="reader-stage">
                 <div class="loader hidden" id="quran-loader"></div>
@@ -210,6 +222,7 @@
                     <select id="theme-select">
                         <option value="mint">🌿 أبيض ومينت</option>
                         <option value="dark">🌙 دارك مود</option>
+                        <option value="black">🖤 أسود قاتم</option>
                         <option value="lavender">💜 لافندر هادئ</option>
                         <option value="sky">☁️ سماوي فاتح</option>
                         <option value="rose">🌸 وردي ناعم</option>
@@ -300,6 +313,6 @@
     <!-- Audio -->
     <audio id="alarm-sound" src="alarm.m4a" preload="auto"></audio>
 
-    <script src="script.js?v=20260330-13"></script>
+    <script src="script.js?v=20260331-14"></script>
 </body>
 </html>

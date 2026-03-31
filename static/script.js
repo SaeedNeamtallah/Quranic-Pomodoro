@@ -1,5 +1,5 @@
 // ===== Configuration =====
-const THEMES = new Set(['mint', 'dark', 'lavender', 'sky', 'rose', 'sand']);
+const THEMES = new Set(['mint', 'dark', 'black', 'lavender', 'sky', 'rose', 'sand']);
 const READING_MODES = new Set(['rub', 'challenge', 'page']);
 const FONT_SIZE_STEPS = ['1.2rem', '1.6rem', '2rem', '2.6rem', '3.2rem'];
 const FONT_SIZE_LABELS = {
@@ -82,6 +82,7 @@ let BREAK_TIME = config.breakDuration * 60;
 let timeRemaining = STUDY_TIME;
 let isStudyMode = true;
 let timerId = null;
+let currentDisplayedChallengePage = 1;
 
 // ===== DOM Elements =====
 const $ = id => document.getElementById(id);
@@ -145,11 +146,6 @@ const FOCUS_EXIT_ICON = `
         <path d="m15 9-6 6"></path>
     </svg>
 `;
-
-// Request notification permission on load
-if ('Notification' in window && Notification.permission === 'default') {
-    Notification.requestPermission();
-}
 
 // Stats
 const statsBtn      = $('stats-btn');
@@ -285,8 +281,14 @@ function updateStatsDisplay() {
 }
 
 function applyTheme() {
-    body.classList.remove('theme-mint', 'theme-dark', 'theme-lavender', 'theme-sky', 'theme-rose', 'theme-sand');
-    body.classList.add(`theme-${config.theme || 'mint'}`);
+    body.classList.remove('theme-mint', 'theme-dark', 'theme-black', 'theme-lavender', 'theme-sky', 'theme-rose', 'theme-sand');
+
+    if ((config.theme || 'mint') === 'black') {
+        body.classList.add('theme-dark', 'theme-black');
+    } else {
+        body.classList.add(`theme-${config.theme || 'mint'}`);
+    }
+
     document.documentElement.style.setProperty('--quran-font-size', config.fontSize || '2rem');
     syncFontSizeControls();
 }
@@ -530,7 +532,7 @@ function setReaderFocus(enabled) {
     readerFocusEnabled = Boolean(enabled) && !isStudyMode;
     body.classList.toggle('reader-focus', readerFocusEnabled);
 
-    const focusButtons = [readerFocusBtn, readerFocusControl].filter(Boolean);
+    const focusButtons = [readerFocusBtn, readerFocusControl, readerFocusExitZone].filter(Boolean);
     focusButtons.forEach(button => {
         button.setAttribute('aria-pressed', readerFocusEnabled ? 'true' : 'false');
         button.title = readerFocusEnabled ? 'إظهار الأدوات' : 'وضع التركيز';
@@ -789,6 +791,7 @@ async function fetchQuranContent() {
             versesContainer.classList.remove('mushaf-page-style');
             const perPage = config.rubCount * 15;
             const displayPage = config.challengePage || 1;
+            currentDisplayedChallengePage = displayPage;
             const data = await fetchSurahChallengeContent(config.challengeSurah || 18, displayPage, perPage);
             const meta = buildReaderMeta(data.verses, {
                 mode: 'challenge',
@@ -1010,9 +1013,9 @@ async function navigateQuran(direction) {
         config.mushafPage = target;
         fetchQuranContent();
     } else if (config.readingMode === 'challenge') {
-        const nextPg = (config.challengePage || 1) + direction;
-        if (nextPg < 1) return;
-        config.challengePage = nextPg;
+        let target = currentDisplayedChallengePage + direction;
+        if (target < 1) return;
+        config.challengePage = target;
         fetchQuranContent();
     } else {
         // Rub mode: state is on backend.
@@ -1043,6 +1046,9 @@ nextBtn.addEventListener('click', () => navigateQuran(1));
 
 // Timer buttons
 startBtn.addEventListener('click', async () => {
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission().catch(() => {});
+    }
     await primeAlarmAudio();
     startTimer();
 });
