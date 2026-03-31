@@ -195,5 +195,13 @@ def favicon():
     # Return empty response to prevent 404 spam in logs
     return Response(content=b"", media_type="image/x-icon", status_code=204)
 
+@app.get("/quran_offline.json")
+def get_offline_json():
+    # Serve the offline dataset directly for PWA functionality
+    if os.path.exists(OFFLINE_FILE):
+        with open(OFFLINE_FILE, "r", encoding="utf-8") as f:
+            return Response(content=f.read(), media_type="application/json")
+    raise HTTPException(status_code=404, detail="File not found")
+
 # Provide the frontend files
 app.mount("/", StaticFiles(directory="static", html=True), name="static")

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Amiri+Quran&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260331-51">
+    <link rel="stylesheet" href="style.css?v=20260331-58">
 </head>
 <body class="mode-study">
 
@@ -87,92 +87,92 @@
                 <p class="timer-subtitle" id="mode-subtitle">٣٠ دقيقة عمل عميق</p>
             </div>
             <div class="sidebar-bottom-group">
-              <div class="controls" id="timer-controls">
-                <button id="reader-focus-control" class="btn btn-ghost" type="button" title="وضع التركيز" aria-label="وضع التركيز" aria-pressed="false">
-                    <span class="btn-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
-                            <path d="M16 3h3a2 2 0 0 1 2 2v3"></path>
-                            <path d="M8 21H5a2 2 0 0 1-2-2v-3"></path>
-                            <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
-                        </svg>
-                    </span>
-                    <span class="btn-label">تركيز</span>
-                </button>
-                <button id="start-btn" class="btn btn-primary" type="button" title="ابدأ المؤقت" aria-label="ابدأ المؤقت">
-                    <span class="btn-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" class="icon-fill">
-                            <path d="M8 5.5v13l10-6.5-10-6.5z"></path>
-                        </svg>
-                    </span>
-                    <span class="btn-label">ابدأ</span>
-                </button>
-                <button id="pause-btn" class="btn btn-primary hidden" type="button" title="إيقاف مؤقت" aria-label="إيقاف مؤقت">
-                    <span class="btn-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" class="icon-fill">
-                            <rect x="7" y="5" width="3.5" height="14" rx="1.2"></rect>
-                            <rect x="13.5" y="5" width="3.5" height="14" rx="1.2"></rect>
-                        </svg>
-                    </span>
-                    <span class="btn-label">إيقاف</span>
-                </button>
-                <button id="reset-btn" class="btn btn-ghost" type="button" title="إعادة المؤقت" aria-label="إعادة المؤقت">
-                    <span class="btn-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M20 5v6h-6"></path>
-                            <path d="M20 11a8 8 0 1 0 2.3 5.7"></path>
-                        </svg>
-                    </span>
-                    <span class="btn-label">إعادة</span>
-                </button>
-                <button id="skip-btn" class="btn btn-ghost" type="button" title="تخطي إلى الوضع التالي" aria-label="تخطي إلى الوضع التالي">
-                    <span class="btn-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M5 6.5v11l7-5.5-7-5.5z"></path>
-                            <path d="M12 6.5v11l7-5.5-7-5.5z"></path>
-                            <path d="M19 6v12"></path>
-                        </svg>
-                    </span>
-                    <span class="btn-label">تخطي</span>
-                </button>
-            </div>
-            <div class="reader-mode-row" style="display: flex; justify-content: space-between; width: 100%;">
-                <span class="reader-mode-pill" id="reader-mode-pill">وقت التركيز</span>
-                <div class="reader-extra-actions" style="display: flex; gap: 0.5rem; display: none;">
-                    <button class="icon-btn" type="button" title="إحصائيات" onclick="window.openStatsModal ? window.openStatsModal() : document.getElementById('stats-modal').classList.remove('hidden')">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+                <div class="controls" id="timer-controls">
+                    <button id="reader-focus-control" class="btn btn-ghost" type="button" title="وضع التركيز" aria-label="وضع التركيز" aria-pressed="false">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+                                <path d="M16 3h3a2 2 0 0 1 2 2v3"></path>
+                                <path d="M8 21H5a2 2 0 0 1-2-2v-3"></path>
+                                <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+                            </svg>
+                        </span>
+                        <span class="btn-label">تركيز</span>
                     </button>
-                    <button class="icon-btn" type="button" title="الإعدادات" onclick="window.openSettingsModal ? window.openSettingsModal() : document.getElementById('settings-modal').classList.remove('hidden')">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <button id="start-btn" class="btn btn-primary" type="button" title="ابدأ المؤقت" aria-label="ابدأ المؤقت">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" class="icon-fill">
+                                <path d="M8 5.5v13l10-6.5-10-6.5z"></path>
+                            </svg>
+                        </span>
+                        <span class="btn-label">ابدأ</span>
+                    </button>
+                    <button id="pause-btn" class="btn btn-primary hidden" type="button" title="إيقاف مؤقت" aria-label="إيقاف مؤقت">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" class="icon-fill">
+                                <rect x="7" y="5" width="3.5" height="14" rx="1.2"></rect>
+                                <rect x="13.5" y="5" width="3.5" height="14" rx="1.2"></rect>
+                            </svg>
+                        </span>
+                        <span class="btn-label">إيقاف</span>
+                    </button>
+                    <button id="reset-btn" class="btn btn-ghost" type="button" title="إعادة المؤقت" aria-label="إعادة المؤقت">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20 5v6h-6"></path>
+                                <path d="M20 11a8 8 0 1 0 2.3 5.7"></path>
+                            </svg>
+                        </span>
+                        <span class="btn-label">إعادة</span>
+                    </button>
+                    <button id="skip-btn" class="btn btn-ghost" type="button" title="تخطي إلى الوضع التالي" aria-label="تخطي إلى الوضع التالي">
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 6.5v11l7-5.5-7-5.5z"></path>
+                                <path d="M12 6.5v11l7-5.5-7-5.5z"></path>
+                                <path d="M19 6v12"></path>
+                            </svg>
+                        </span>
+                        <span class="btn-label">تخطي</span>
                     </button>
                 </div>
-            </div>
-            <div class="reader-side-stats modern-stats-card">
-                <div class="reader-side-item">
-                    <span id="reader-side-label-1">الحزب</span>
-                    <strong id="reader-side-mode">أرباع متتالية</strong>
+                <div class="reader-mode-row" style="display: flex; justify-content: space-between; width: 100%;">
+                    <span class="reader-mode-pill" id="reader-mode-pill">وقت التركيز</span>
+                    <div class="reader-extra-actions" style="display: flex; gap: 0.5rem; display: none;">
+                        <button class="icon-btn" type="button" title="إحصائيات" onclick="window.openStatsModal ? window.openStatsModal() : document.getElementById('stats-modal').classList.remove('hidden')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+                        </button>
+                        <button class="icon-btn" type="button" title="الإعدادات" onclick="window.openSettingsModal ? window.openSettingsModal() : document.getElementById('settings-modal').classList.remove('hidden')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="reader-side-item">
-                    <span id="reader-side-label-2">ربع الحزب</span>
-                    <strong id="reader-session-goal">جلسة هادئة</strong>
+                <div class="reader-side-stats modern-stats-card">
+                    <div class="reader-side-item">
+                        <span id="reader-side-label-1">الحزب</span>
+                        <strong id="reader-side-mode">أرباع متتالية</strong>
+                    </div>
+                    <div class="reader-side-item">
+                        <span id="reader-side-label-2">ربع الحزب</span>
+                        <strong id="reader-session-goal">جلسة هادئة</strong>
+                    </div>
+                    <div class="reader-side-item">
+                        <span id="reader-side-label-3">الربع من 240</span>
+                        <strong id="reader-last-position">الصفحة 1</strong>
+                    </div>
                 </div>
-                <div class="reader-side-item">
-                    <span id="reader-side-label-3">الربع من 240</span>
-                    <strong id="reader-last-position">الصفحة 1</strong>
-                </div>
-            </div>
-            <div class="reader-font-controls" id="reader-font-controls">
-                <span class="reader-font-title">حجم الخط</span>
-                <div class="reader-font-buttons">
-                    <button id="font-increase-btn" class="font-step-btn" type="button" title="تكبير الخط" aria-label="تكبير الخط">+</button>
-                    <span id="font-size-display" class="font-size-display">متوسط</span>
-                    <button id="font-decrease-btn" class="font-step-btn" type="button" title="تصغير الخط" aria-label="تصغير الخط">-</button>
+                <div class="reader-font-controls" id="reader-font-controls">
+                    <span class="reader-font-title">حجم الخط</span>
+                    <div class="reader-font-buttons">
+                        <button id="font-increase-btn" class="font-step-btn" type="button" title="تكبير الخط" aria-label="تكبير الخط">+</button>
+                        <span id="font-size-display" class="font-size-display">متوسط</span>
+                        <button id="font-decrease-btn" class="font-step-btn" type="button" title="تصغير الخط" aria-label="تصغير الخط">-</button>
+                    </div>
                 </div>
             </div>
         </div>
-          </div>
 
-          <!-- Quran Display Section -->
+        <!-- Quran Display Section -->
         <div id="quran-display" class="quran-section hidden">
             <div class="reader-stage">
                 <div class="loader hidden" id="quran-loader"></div>
@@ -261,9 +261,9 @@
                 </div>
 
                 <div class="setting-item" id="rub-group">
-                <label for="current-rub">الانتقال لربع</label>
-                <select id="current-rub"></select>
-            </div>
+                    <label for="current-rub">الانتقال لربع</label>
+                    <select id="current-rub"></select>
+                </div>
 
                 <div class="setting-item">
                     <label for="study-duration">مدة التركيز (دقائق)</label>
@@ -313,6 +313,6 @@
     <!-- Audio -->
     <audio id="alarm-sound" src="alarm.m4a" preload="auto"></audio>
 
-    <script src="script.js?v=20260331-14"></script>
+    <script src="script.js?v=20260331-21"></script>
 </body>
 </html>

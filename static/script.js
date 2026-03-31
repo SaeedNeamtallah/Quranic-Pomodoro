@@ -1,4 +1,4 @@
-// ===== Configuration =====
+// ===== Constants & Configuration =====
 const THEMES = new Set(['mint', 'dark', 'black', 'lavender', 'sky', 'rose', 'sand']);
 const READING_MODES = new Set(['rub', 'challenge', 'page']);
 const FONT_SIZE_STEPS = ['1.2rem', '1.6rem', '2rem', '2.6rem', '3.2rem'];
@@ -11,6 +11,7 @@ const FONT_SIZE_LABELS = {
 };
 const FONT_SIZES = new Set(FONT_SIZE_STEPS);
 
+// ===== Storage & Normalization Helpers =====
 function readStoredJson(key) {
     try {
         return JSON.parse(localStorage.getItem(key) || 'null');
@@ -52,6 +53,7 @@ function normalizeStats(input = {}) {
     };
 }
 
+// ===== Persistent State =====
 let config = normalizeConfig(readStoredJson('quranic_pomodoro_config') || {});
 let stats = normalizeStats(readStoredJson('quranic_pomodoro_stats') || {});
 let runtimeState = {
@@ -61,6 +63,7 @@ let apiStatusCache = null;
 let quranDataCache = null;
 let readerFocusEnabled = false;
 
+// ===== Persistence =====
 function persistConfig() {
     localStorage.setItem('quranic_pomodoro_config', JSON.stringify(config));
 }
@@ -77,6 +80,7 @@ persistConfig();
 persistStats();
 persistRuntimeState();
 
+// ===== Runtime State =====
 let STUDY_TIME = config.studyDuration * 60;
 let BREAK_TIME = config.breakDuration * 60;
 let timeRemaining = STUDY_TIME;
@@ -84,7 +88,7 @@ let isStudyMode = true;
 let timerId = null;
 let currentDisplayedChallengePage = 1;
 
-// ===== DOM Elements =====
+// ===== DOM References =====
 const $ = id => document.getElementById(id);
 
 const timeDisplay   = $('time-left');
@@ -146,15 +150,24 @@ const FOCUS_EXIT_ICON = `
         <path d="m15 9-6 6"></path>
     </svg>
 `;
+const FOCUS_QUOTES = [
+    'اقرأ ورتل بهدوء',
+    'ورتل القرآن ترتيلا',
+    'رب زدني علما',
+    'ألا بذكر الله تطمئن القلوب',
+    'اجعل وردك نورا ليومك'
+];
+let focusQuoteTimer = null;
+let focusQuoteIndex = 0;
 
-// Stats
+// ===== DOM: Stats =====
 const statsBtn      = $('stats-btn');
 const statsModal    = $('stats-modal');
 const closeStatsBtn = $('close-stats-btn');
 const statPomodoros = $('stat-pomodoros');
 const statRubs      = $('stat-rubs');
 
-// Settings
+// ===== DOM: Settings =====
 const settingsBtn       = $('settings-btn');
 const settingsModal     = $('settings-modal');
 const closeSettingsBtn  = $('close-settings-btn');
@@ -174,7 +187,7 @@ const currentPageInput  = $('current-page');
 const prevBtn           = $('prev-btn');
 const nextBtn           = $('next-btn');
 
-// ===== Surah Names =====
+// ===== Static Data =====
 const surahNames = [
   "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
   "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
@@ -190,7 +203,7 @@ const surahNames = [
   "المسد", "الإخلاص", "الفلق", "الناس"
 ];
 
-// Populate surah dropdown
+// ===== Static Select Initialization =====
 surahNames.forEach((name, i) => {
     const opt = document.createElement('option');
     opt.value = i + 1;
@@ -198,7 +211,7 @@ surahNames.forEach((name, i) => {
     challengeSurahInput.appendChild(opt);
 });
 
-// Populate rub' dropdown grouped by Juz with starting Surah names
+// Populate rub' dropdown grouped by juz and starting surah
 const juzStartSurah = [1,2,2,3,4,4,5,6,7,8,9,11,12,15,17,18,21,23,25,27,29,33,36,39,41,46,51,58,67,78];
 
 // Add a default "current" option
@@ -226,7 +239,7 @@ for (let juz = 0; juz < 30; juz++) {
     currentRubInput.appendChild(group);
 }
 
-// ===== Reading Mode Toggle =====
+// ===== Reading Mode UI =====
 function updateModeVisibility(mode) {
     rubGroup.classList.add('hidden');
     surahGroup.classList.add('hidden');
@@ -238,7 +251,7 @@ function updateModeVisibility(mode) {
 
 readingModeSelect.addEventListener('change', e => updateModeVisibility(e.target.value));
 
-// ===== Settings Functions =====
+// ===== Settings Modal =====
 function initSettings() {
     studyDurInput.value = config.studyDuration;
     breakDurInput.value = config.breakDuration;
@@ -494,7 +507,7 @@ function updateReaderChrome(meta) {
     if (readerContextLabel) {
         readerContextLabel.textContent = isStudyMode ? 'بومودورو قرآني هادئ' : details.contextLabel;
     }
-    if (readerModePill) readerModePill.textContent = details.modeLabel;
+    if (readerModePill && !shouldRotateAmbientQuote()) readerModePill.textContent = details.modeLabel;
     if (readerSurahName) readerSurahName.textContent = details.surahTitle;
     if (readerSurahInline) readerSurahInline.textContent = details.surahTitle;
     if (readerPageChip) readerPageChip.textContent = details.pageLabel;
@@ -528,6 +541,42 @@ function setStudyChrome() {
     });
 }
 
+function stopFocusQuoteRotation() {
+    if (!focusQuoteTimer) return;
+    window.clearInterval(focusQuoteTimer);
+    focusQuoteTimer = null;
+}
+
+function getDefaultReaderModePillText() {
+    return isStudyMode ? 'وقت التركيز' : getReadingModeLabel(config.readingMode);
+}
+
+function shouldRotateAmbientQuote() {
+    return isStudyMode;
+}
+
+function renderFocusQuote() {
+    if (!readerModePill) return;
+    if (!shouldRotateAmbientQuote()) {
+        readerModePill.textContent = getDefaultReaderModePillText();
+        return;
+    }
+
+    readerModePill.textContent = FOCUS_QUOTES[focusQuoteIndex];
+}
+
+function startFocusQuoteRotation() {
+    stopFocusQuoteRotation();
+    if (!shouldRotateAmbientQuote() || !readerModePill) return;
+
+    focusQuoteIndex = 0;
+    renderFocusQuote();
+    focusQuoteTimer = window.setInterval(() => {
+        focusQuoteIndex = (focusQuoteIndex + 1) % FOCUS_QUOTES.length;
+        renderFocusQuote();
+    }, 5000);
+}
+
 function setReaderFocus(enabled) {
     readerFocusEnabled = Boolean(enabled) && !isStudyMode;
     body.classList.toggle('reader-focus', readerFocusEnabled);
@@ -549,18 +598,35 @@ function setReaderFocus(enabled) {
         if (icon) icon.innerHTML = readerFocusEnabled ? FOCUS_EXIT_ICON : FOCUS_ENTER_ICON;
         if (label) label.textContent = readerFocusEnabled ? 'إنهاء' : 'تركيز';
     }
+
+    if (shouldRotateAmbientQuote()) {
+        startFocusQuoteRotation();
+    } else {
+        stopFocusQuoteRotation();
+        renderFocusQuote();
+    }
 }
 
 function updateReadingTimerInteraction() {
     if (!timerSummary) return;
 
-    timerSummary.classList.remove('timer-start-ready');
-    timerSummary.tabIndex = -1;
-    timerSummary.setAttribute('role', 'group');
-    timerSummary.setAttribute('aria-label', 'مؤقت جلسة القراءة');
+    timerSummary.classList.remove('timer-start-ready', 'timer-end-ready');
+
+    if (isStudyMode) {
+        timerSummary.classList.add('timer-start-ready');
+        timerSummary.tabIndex = 0;
+        timerSummary.setAttribute('role', 'button');
+        timerSummary.setAttribute('aria-label', timerId === null ? 'ابدأ جلسة التركيز' : 'إيقاف جلسة التركيز مؤقتًا');
+        return;
+    }
+
+    timerSummary.classList.add('timer-end-ready');
+    timerSummary.tabIndex = 0;
+    timerSummary.setAttribute('role', 'button');
+    timerSummary.setAttribute('aria-label', 'إنهاء جلسة القراءة');
 }
 
-// ===== Timer Functions =====
+// ===== Timer Logic =====
 function formatTime(s) {
     const m = Math.floor(s / 60);
     const sec = s % 60;
@@ -568,12 +634,13 @@ function formatTime(s) {
 }
 
 function updateDisplay() {
-    timeDisplay.textContent = formatTime(timeRemaining);
+    timeDisplay.textContent = isStudyMode ? formatTime(timeRemaining) : 'انتهاء';
     // Update tab title
     document.title = `${formatTime(timeRemaining)} — ${isStudyMode ? 'تركيز' : 'قرآن'} | Q Doro`;
     // Update progress ring
     updateProgressRing();
     if (isStudyMode) setStudyChrome();
+    updateReadingTimerInteraction();
 }
 
 function updateProgressRing() {
@@ -650,6 +717,12 @@ function switchMode() {
     }
     updateDisplay();
     pauseTimer();
+    if (shouldRotateAmbientQuote()) {
+        startFocusQuoteRotation();
+    } else {
+        stopFocusQuoteRotation();
+        renderFocusQuote();
+    }
 }
 
 async function hasBackend() {
@@ -772,7 +845,7 @@ async function fetchSurahChallengeContent(chapter, page, perPage) {
     };
 }
 
-// ===== Quran Fetching =====
+// ===== Quran Data Fetching =====
 function buildVersesHtml(verses) {
     let html = '<div class="mushaf-layout">';
     verses.forEach(v => {
@@ -1000,7 +1073,36 @@ document.addEventListener('keydown', event => {
     }
 });
 
-// ===== Quran Navigation (Prev / Next) =====
+timerSummary?.addEventListener('click', event => {
+    if (isStudyMode) {
+        if (timerId === null) {
+            startBtn.click();
+        } else {
+            pauseTimer();
+        }
+        return;
+    }
+
+    handleSkipClick(event);
+});
+
+timerSummary?.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+
+    if (isStudyMode) {
+        if (timerId === null) {
+            startBtn.click();
+        } else {
+            pauseTimer();
+        }
+        return;
+    }
+
+    handleSkipClick(event);
+});
+
+// ===== Quran Navigation =====
 async function navigateQuran(direction) {
     // direction: 1 = next, -1 = prev
     if (config.readingMode === 'page') {
@@ -1058,7 +1160,7 @@ skipBtn.addEventListener('click', handleSkipClick);
 fontIncreaseBtn?.addEventListener('click', () => stepFontSize(1));
 fontDecreaseBtn?.addEventListener('click', () => stepFontSize(-1));
 
-// ===== Init =====
+// ===== Initialization =====
 initSettings();
 applyTheme();
 setReaderFocus(false);
@@ -1068,3 +1170,4 @@ modeSubtitle.textContent = `${config.studyDuration} دقيقة عمل عميق`;
 setStudyChrome();
 updateDisplay();
 updateReadingTimerInteraction();
+startFocusQuoteRotation();
