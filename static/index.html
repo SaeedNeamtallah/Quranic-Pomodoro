@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Amiri+Quran&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260331-58">
+    <link rel="stylesheet" href="style.css?v=20260331-71">
 </head>
 <body class="mode-study">
 
@@ -59,6 +59,9 @@
             <div class="reader-header-shell" aria-live="polite">
                 <div class="reader-title-row">
                     <h2 id="reader-surah-name">جاهز للجلسة</h2>
+                </div>
+                <div class="reader-rub-row">
+                    <span id="reader-rub-meta">الربع --</span>
                 </div>
                 <div class="reader-meta-row">
                     <span class="reader-meta-chip" id="reader-page-chip">الصفحة --</span>
@@ -125,20 +128,18 @@
                         </span>
                         <span class="btn-label">إعادة</span>
                     </button>
-                    <button id="skip-btn" class="btn btn-ghost" type="button" title="تخطي إلى الوضع التالي" aria-label="تخطي إلى الوضع التالي">
-                        <span class="btn-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M5 6.5v11l7-5.5-7-5.5z"></path>
-                                <path d="M12 6.5v11l7-5.5-7-5.5z"></path>
-                                <path d="M19 6v12"></path>
-                            </svg>
-                        </span>
-                        <span class="btn-label">تخطي</span>
-                    </button>
+
                 </div>
                 <div class="reader-mode-row" style="display: flex; justify-content: space-between; width: 100%;">
                     <span class="reader-mode-pill" id="reader-mode-pill">وقت التركيز</span>
                     <div class="reader-extra-actions" style="display: flex; gap: 0.5rem; display: none;">
+                        <button id="top-skip-btn" class="icon-btn" type="button" title="تخطي إلى الوضع التالي" aria-label="تخطي إلى الوضع التالي" style="border-radius: 50%; opacity: 0.9;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <path d="M5 6.5v11l7-5.5-7-5.5z"></path>
+                                <path d="M12 6.5v11l7-5.5-7-5.5z"></path>
+                                <path d="M19 6v12" stroke="currentColor" stroke-width="2"></path>
+                            </svg>
+                        </button>
                         <button class="icon-btn" type="button" title="إحصائيات" onclick="window.openStatsModal ? window.openStatsModal() : document.getElementById('stats-modal').classList.remove('hidden')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
                         </button>
@@ -148,17 +149,24 @@
                     </div>
                 </div>
                 <div class="reader-side-stats modern-stats-card">
-                    <div class="reader-side-item">
-                        <span id="reader-side-label-1">الحزب</span>
-                        <strong id="reader-side-mode">أرباع متتالية</strong>
-                    </div>
-                    <div class="reader-side-item">
-                        <span id="reader-side-label-2">ربع الحزب</span>
-                        <strong id="reader-session-goal">جلسة هادئة</strong>
-                    </div>
-                    <div class="reader-side-item">
-                        <span id="reader-side-label-3">الربع من 240</span>
-                        <strong id="reader-last-position">الصفحة 1</strong>
+                    <div class="reader-side-item reader-side-progress-card">
+                        <div class="reader-side-progress-head">
+                            <div class="reader-side-progress-copy">
+                                <span id="reader-side-label-1">الحزب</span>
+                                <strong id="reader-side-mode">أرباع متتالية</strong>
+                            </div>
+                            <div class="reader-side-progress-copy">
+                                <span id="reader-side-label-2">ربع الحزب</span>
+                                <strong id="reader-session-goal">جلسة هادئة</strong>
+                            </div>
+                        </div>
+                        <div class="reader-side-progress-track" aria-hidden="true">
+                            <span id="reader-side-progress-fill"></span>
+                        </div>
+                        <div class="reader-side-progress-foot">
+                            <span id="reader-side-label-3">الربع من 240</span>
+                            <strong id="reader-last-position">الصفحة 1</strong>
+                        </div>
                     </div>
                 </div>
                 <div class="reader-font-controls" id="reader-font-controls">
@@ -313,6 +321,6 @@
     <!-- Audio -->
     <audio id="alarm-sound" src="alarm.m4a" preload="auto"></audio>
 
-    <script src="script.js?v=20260331-21"></script>
+    <script src="script.js?v=20260331-24"></script>
 </body>
 </html>

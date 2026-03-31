@@ -95,7 +95,7 @@ const timeDisplay   = $('time-left');
 const startBtn      = $('start-btn');
 const pauseBtn      = $('pause-btn');
 const resetBtn      = $('reset-btn');
-const skipBtn       = $('skip-btn');
+const skipBtn       = $('top-skip-btn');
 const modeTitle     = $('mode-title');
 const modeSubtitle  = $('mode-subtitle');
 const quranDisplay  = $('quran-display');
@@ -109,6 +109,7 @@ const timerSection  = $('timer-section');
 const readerContextLabel = $('reader-context-label');
 const readerModePill = $('reader-mode-pill');
 const readerSurahName = $('reader-surah-name');
+const readerRubMeta = $('reader-rub-meta');
 const readerSurahInline = $('reader-surah-inline');
 const readerPageChip = $('reader-page-chip');
 const readerJuzChip = $('reader-juz-chip');
@@ -118,6 +119,7 @@ const readerProgressText = $('reader-progress-text');
 const readerSideLabel1 = $('reader-side-label-1');
 const readerSideLabel2 = $('reader-side-label-2');
 const readerSideLabel3 = $('reader-side-label-3');
+const readerSideProgressFill = $('reader-side-progress-fill');
 const readerSideStatus = $('reader-side-status');
 const readerSideMode = $('reader-side-mode');
 const readerSessionGoal = $('reader-session-goal');
@@ -151,11 +153,16 @@ const FOCUS_EXIT_ICON = `
     </svg>
 `;
 const FOCUS_QUOTES = [
-    'اقرأ ورتل بهدوء',
-    'ورتل القرآن ترتيلا',
-    'رب زدني علما',
-    'ألا بذكر الله تطمئن القلوب',
-    'اجعل وردك نورا ليومك'
+    'اللهم افتح علي فتوح العارفين',
+    'سبحانك اللهم وبحمدك وتبارك اسمك وتعالى جدك',
+    'اللهم أعني على ذكرك وشكرك وحسن عبادتك',
+    'اللهم إني أسألك علما نافعا وقلبا خاشعا',
+    'رب زدني علما ووفقني لفهم كتابك',
+    'اللهم إني أعوذ بك من العجز والكسل',
+    'حسبي الله لا إله إلا هو عليه توكلت',
+    'اللهم انصر الإسلام وأعز المسلمين',
+    'رب اشرح لي صدري ويسر لي أمري',
+    'اللهم اجعل القرآن ربيع قلبي ونور صدري'
 ];
 let focusQuoteTimer = null;
 let focusQuoteIndex = 0;
@@ -464,25 +471,25 @@ function buildReaderMeta(verses, options = {}) {
     const juzLabel = formatRangeLabel('الجزء', juzs);
     const hizbLabel = formatRangeLabel('الحزب', hizbs);
     const lastPosition = pages.length ? pageLabel : (rubs.length ? formatRangeLabel('الربع', rubs) : surahTitle);
-    let sideDetail1Label = 'الصفحة';
-    let sideDetail1Value = formatNumericRange(pages);
-    let sideDetail2Label = 'الجزء';
-    let sideDetail2Value = formatNumericRange(juzs);
-    let sideDetail3Label = 'الحزب';
-    let sideDetail3Value = formatNumericRange(hizbs);
+    const currentAbsoluteRub = fullRubNumbers[fullRubNumbers.length - 1] || options.currentRub || 1;
+    const rubProgressPercent = Math.max(0, Math.min(100, (currentAbsoluteRub / 240) * 100));
+    let sideDetail1Label = 'الحزب الحالي';
+    let sideDetail1Value = formatNumericRange(hizbs);
+    let sideDetail2Label = 'ربع الحزب';
+    let sideDetail2Value = formatNumericRange(rubs);
+    let sideDetail3Label = 'الربع من 240';
+    let sideDetail3Value = `${currentAbsoluteRub} / 240`;
 
     if (mode === 'rub') {
-        sideDetail1Label = 'الحزب';
         sideDetail1Value = formatNumericRange(hizbs);
-        sideDetail2Label = 'ربع الحزب';
         sideDetail2Value = formatNumericRange(rubs);
-        sideDetail3Label = 'الربع من 240';
-        sideDetail3Value = formatNumericRange(fullRubNumbers);
+        sideDetail3Value = `${currentAbsoluteRub} / 240`;
     }
 
     return {
         modeLabel: getReadingModeLabel(mode),
         surahTitle,
+        rubMetaText: `الربع ${currentAbsoluteRub}`,
         pageLabel,
         juzLabel,
         hizbLabel,
@@ -497,7 +504,8 @@ function buildReaderMeta(verses, options = {}) {
         sideDetail2Label,
         sideDetail2Value,
         sideDetail3Label,
-        sideDetail3Value
+        sideDetail3Value,
+        sideProgressPercent: rubProgressPercent
     };
 }
 
@@ -509,6 +517,7 @@ function updateReaderChrome(meta) {
     }
     if (readerModePill && !shouldRotateAmbientQuote()) readerModePill.textContent = details.modeLabel;
     if (readerSurahName) readerSurahName.textContent = details.surahTitle;
+    if (readerRubMeta) readerRubMeta.textContent = details.rubMetaText || 'الربع --';
     if (readerSurahInline) readerSurahInline.textContent = details.surahTitle;
     if (readerPageChip) readerPageChip.textContent = details.pageLabel;
     if (readerJuzChip) readerJuzChip.textContent = details.juzLabel;
@@ -520,6 +529,9 @@ function updateReaderChrome(meta) {
     if (readerSideLabel1) readerSideLabel1.textContent = details.sideDetail1Label || 'الحزب';
     if (readerSideLabel2) readerSideLabel2.textContent = details.sideDetail2Label || 'ربع الحزب';
     if (readerSideLabel3) readerSideLabel3.textContent = details.sideDetail3Label || 'الربع من 240';
+    if (readerSideProgressFill) {
+        readerSideProgressFill.style.width = `${Math.max(0, Math.min(100, details.sideProgressPercent || 0))}%`;
+    }
     if (readerSideStatus) readerSideStatus.textContent = details.sidebarStatus;
     if (readerSideMode) readerSideMode.textContent = details.sideDetail1Value || '--';
     if (readerSessionGoal) readerSessionGoal.textContent = details.sideDetail2Value || '--';
@@ -530,6 +542,7 @@ function setStudyChrome() {
     updateReaderChrome({
         modeLabel: 'وقت التركيز',
         surahTitle: 'جلسة عمل عميق',
+        rubMetaText: 'الورد يبدأ بعد انتهاء التركيز',
         pageLabel: `${config.studyDuration} دقيقة تركيز`,
         juzLabel: `${config.breakDuration} دقيقة قراءة`,
         hizbLabel: getReadingModeLabel(config.readingMode),
@@ -538,6 +551,7 @@ function setStudyChrome() {
         sidebarStatus: 'جلسة التركيز',
         lastPosition: 'يبدأ الورد بعد انتهاء المؤقت',
         sessionGoal: `${config.studyDuration} دقيقة عمل عميق`,
+        sideProgressPercent: 0,
     });
 }
 
@@ -574,7 +588,7 @@ function startFocusQuoteRotation() {
     focusQuoteTimer = window.setInterval(() => {
         focusQuoteIndex = (focusQuoteIndex + 1) % FOCUS_QUOTES.length;
         renderFocusQuote();
-    }, 5000);
+    }, 60000);
 }
 
 function setReaderFocus(enabled) {
@@ -634,7 +648,10 @@ function formatTime(s) {
 }
 
 function updateDisplay() {
-    timeDisplay.textContent = isStudyMode ? formatTime(timeRemaining) : 'انتهاء';
+    const showStudyStartLabel = isStudyMode && timerId === null && timeRemaining === STUDY_TIME;
+    timeDisplay.textContent = isStudyMode
+        ? (showStudyStartLabel ? 'ابدأ' : formatTime(timeRemaining))
+        : 'انتهاء';
     // Update tab title
     document.title = `${formatTime(timeRemaining)} — ${isStudyMode ? 'تركيز' : 'قرآن'} | Q Doro`;
     // Update progress ring
